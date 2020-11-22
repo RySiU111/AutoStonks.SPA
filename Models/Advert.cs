@@ -26,5 +26,11 @@ namespace AutoStonks.SPA.Models
         public List<Photo> Photos { get; set; }
         public List<AdvertEquipment> AdvertEquipments { get; set; }
         public List<UserAdvert> UserAdverts { get; set; }
+    
+        public Advert() 
+        { 
+            this.AdvertDetails = new AdvertDetails();
+        }
+
     }
 }

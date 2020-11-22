@@ -1,0 +1,100 @@
+@page "/advert/form"
+@using AutoStonks.SPA.Models
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <EditForm Model="_advert" OnValidSubmit="HandleValidSubmit">
+            <Field>
+                <TextEdit  Placeholder="Description"
+                    @bind-Text="_advert.Description"/>
+            </Field>
+            <Field>
+                <TextEdit Placeholder="VIN" 
+                    @bind-Text="_advert.VIN"/>
+            </Field>
+            <Field>
+                <DateEdit Placeholder="FirstRegistrationDate" 
+                    TValue="DateTime"
+                    @bind-Text="_advert.FirstRegistrationDate"/>
+            </Field>
+            <Field>
+                <TextEdit Placeholder="PlateNumber" 
+                    @bind-Text="_advert.PlateNumber"/>
+            </Field>
+            <Field>
+                <NumericEdit Placeholder="Price" 
+                    TValue="double"
+                    @bind-Value="_advert.AdvertDetails.Price"
+                    Min="0"/>
+            </Field>
+            <Field>
+                <NumericEdit Placeholder="HorsePower" 
+                    TValue="int"
+                    @bind-Value="_advert.AdvertDetails.Horsepower"
+                    Min="0"/>
+            </Field>
+            <Field>
+                <NumericEdit Placeholder="Displacement" 
+                    TValue="int "
+                    @bind-Value="_advert.AdvertDetails.Displacement"
+                    Min="0"/>
+            </Field>
+            <Field>
+                <TextEdit Placeholder="Location" 
+                    @bind-Text="_advert.AdvertDetails.Location"/>
+            </Field>
+            <Field>
+                <Check
+                    TValue="bool" 
+                    @bind-Value="_advert.AdvertDetails.HasBeenCrashed">
+                    HasBeenCrashed</Check>
+            </Field>
+            <Field>
+                <Select TValue="Fuel" @bind-SelectedValue="_advert.AdvertDetails.Fuel">
+                    @foreach(var fuel in Enum.GetValues(typeof(Fuel)).Cast<Fuel>())
+                    {
+                        <SelectItem Value="@fuel">@fuel</SelectItem>
+                    } 
+                </Select>
+            </Field>
+            <Field>
+                <Select TValue="Condition" @bind-SelectedValue="_advert.AdvertDetails.Condition">
+                    @foreach(var condition in Enum.GetValues(typeof(Condition)).Cast<Condition>())
+                    {
+                        <SelectItem Value="@condition">@condition</SelectItem>
+                    } 
+                </Select>
+            </Field>
+            <Field>
+                <Select TValue="DriveType" @bind-SelectedValue="_advert.AdvertDetails.DriveType">
+                    @foreach(var driveType in Enum.GetValues(typeof(DriveType)).Cast<DriveType>())
+                    {
+                        <SelectItem Value="@driveType">@driveType</SelectItem>
+                    } 
+                </Select>
+            </Field>
+            <Field>
+                <Select TValue="TransmissionType" @bind-SelectedValue="_advert.AdvertDetails.TransmissionType">
+                    @foreach(var transmissionType in Enum.GetValues(typeof(TransmissionType)).Cast<TransmissionType>())
+                    {
+                        <SelectItem Value="@transmissionType">@transmissionType</SelectItem>
+                    } 
+                </Select>
+            </Field>
+
+            <!--Brand Model Generation-->
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+
+                </Field>
+                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+                    
+                </Field>
+                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+                    
+                </Field>
+            </Fields>
+            <Button Type="ButtonType.Submit">Zapisz</Button>
+        </EditForm>
+    </div>
+</div>

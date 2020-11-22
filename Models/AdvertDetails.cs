@@ -48,5 +48,10 @@ namespace AutoStonks.SPA.Models
         public Advert Advert { get; set; }
         public Generation Generation { get; set; }
         public int GenerationId { get; set; }
+    
+        public AdvertDetails()
+        {
+            this.Generation = new Generation();
+        }
     }
 }
