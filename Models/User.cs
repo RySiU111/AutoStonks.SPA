@@ -16,6 +16,6 @@ namespace AutoStonks.SPA.Models
         public DateTime LastPasswordChange { get; set; }
         public bool EnforcePasswordChange { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public List<UserAdvert> UserAdverts { get; set; }
+        public List<Advert> Adverts { get; set; }
     }
 }

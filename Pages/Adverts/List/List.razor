@@ -2,19 +2,22 @@
 
 <div class="row justify-content-center">
     <div class="col-12">
-        <Table FullWidth="true" Hoverable="true" >
+        <Table FullWidth="true" Hoverable="false" >
             <TableHeader ThemeContrast="ThemeContrast.Dark">
                 <TableRow>
-                    <TableHeaderCell>#</TableHeaderCell>
-                    <TableHeaderCell>First Name</TableHeaderCell>
-                    <TableHeaderCell>Last Name</TableHeaderCell>
-                    <TableHeaderCell>Username</TableHeaderCell>
+                    <TableHeaderCell>
+                        <!--Filters-->
+                    </TableHeaderCell>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 @foreach (var advert in _adverts)
                 {
-                    <GridItem Item="advert"/>
+                    <TableRow>
+                        <TableRowCell>
+                            <ListItem Item="advert"/>
+                        </TableRowCell>
+                    </TableRow>
                 }
             </TableBody>
         </Table>

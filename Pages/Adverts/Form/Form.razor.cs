@@ -11,6 +11,8 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         private async Task HandleValidSubmit()
         {
             System.Console.WriteLine(JObject.FromObject(_advert));
+
+            //TODO: Advert Service - POST
         }
     }
 }
