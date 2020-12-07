@@ -55,8 +55,8 @@
             </Field>
             <Field>
                 <FieldLabel>Rodzaj poliwa</FieldLabel>
-                <Select TValue="Fuel" @bind-SelectedValue="_advert.Fuel">
-                    @foreach(var fuel in Enum.GetValues(typeof(Fuel)).Cast<Fuel>())
+                <Select TValue="FuelType" @bind-SelectedValue="_advert.Fuel">
+                    @foreach(var fuel in Enum.GetValues(typeof(FuelType)).Cast<FuelType>())
                     {
                         <SelectItem Value="@fuel">@fuel</SelectItem>
                     } 
@@ -64,8 +64,8 @@
             </Field>
             <Field>
                 <FieldLabel>Kondycja</FieldLabel>
-                <Select TValue="Condition" @bind-SelectedValue="_advert.Condition">
-                    @foreach(var condition in Enum.GetValues(typeof(Condition)).Cast<Condition>())
+                <Select TValue="ConditionState" @bind-SelectedValue="_advert.Condition">
+                    @foreach(var condition in Enum.GetValues(typeof(ConditionState)).Cast<ConditionState>())
                     {
                         <SelectItem Value="@condition">@condition</SelectItem>
                     } 
@@ -73,8 +73,8 @@
             </Field>
             <Field>
                 <FieldLabel>Napęd</FieldLabel>
-                <Select TValue="DriveType" @bind-SelectedValue="_advert.DriveType">
-                    @foreach(var driveType in Enum.GetValues(typeof(DriveType)).Cast<DriveType>())
+                <Select TValue="DriveTypes" @bind-SelectedValue="_advert.DriveType">
+                    @foreach(var driveType in Enum.GetValues(typeof(DriveTypes)).Cast<DriveTypes>())
                     {
                         <SelectItem Value="@driveType">@driveType</SelectItem>
                     } 
@@ -82,8 +82,8 @@
             </Field>
             <Field>
                 <FieldLabel>Skrzynia biegów</FieldLabel>
-                <Select TValue="TransmissionType" @bind-SelectedValue="_advert.TransmissionType">
-                    @foreach(var transmissionType in Enum.GetValues(typeof(TransmissionType)).Cast<TransmissionType>())
+                <Select TValue="TransmissionTypes" @bind-SelectedValue="_advert.TransmissionType">
+                    @foreach(var transmissionType in Enum.GetValues(typeof(TransmissionTypes)).Cast<TransmissionTypes>())
                     {
                         <SelectItem Value="@transmissionType">@transmissionType</SelectItem>
                     } 

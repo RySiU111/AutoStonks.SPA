@@ -17,6 +17,7 @@ namespace AutoStonks.SPA.Models
         public float Price { get; set; } // 10-> 1zł/d, 20-> 0.9zł/d, 30-> 0.8zł/d; wyróżnienie 5zł/10dni
         public DateTime PaymentInitiation { get; set; } //data rozpoczęcia płatności
         public DateTime PaymentTermination { get; set; } //data otrzymania płatności
+        public DateTime StartDate { get; set; } //kiedy zaczyna ogłoszenie/wyróżnienie
         public int DurationInDays { get; set; } //na ile dni wykupiono ogłoszenie; 10, 20 lub 30 dni
     }
 }

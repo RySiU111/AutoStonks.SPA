@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using AutoStonks.SPA.Services;
 
 namespace AutoStonks.SPA
 {
@@ -22,6 +23,7 @@ namespace AutoStonks.SPA
 
             builder.Services
                 .AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+                .AddScoped<IAdvertService, AdvertService>()
                 .AddBlazorise( options =>
                     {
                         options.ChangeTextOnKeyPress = true;
@@ -29,7 +31,13 @@ namespace AutoStonks.SPA
                 .AddBootstrapProviders()
                 .AddFontAwesomeIcons();
 
-            await builder.Build().RunAsync();
+            var host = builder.Build();
+
+            host.Services
+                .UseBootstrapProviders()
+                .UseFontAwesomeIcons();
+
+            await host.RunAsync();
         }
     }
 }

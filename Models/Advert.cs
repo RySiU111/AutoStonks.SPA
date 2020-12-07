@@ -5,32 +5,32 @@ using System.Threading.Tasks;
 
 namespace AutoStonks.SPA.Models
 {
-    public enum State
+    public enum States
     {
         New, //Dodane, nieopłacone
         Active, //Dodane, opłacone
         Expired,
         Terminated
     }
-    public enum Fuel
+    public enum FuelType
     {
         Diesel,
         Petrol,
         Electric,
         LPG
     }
-    public enum Condition
+    public enum ConditionState
     {
         Damaged,
         Undamaged
     }
-    public enum DriveType
+    public enum DriveTypes
     {
         FWD,
         RWD,
         AWD
     }
-    public enum TransmissionType
+    public enum TransmissionTypes
     {
         Sequence,
         Automatic,
@@ -49,20 +49,21 @@ namespace AutoStonks.SPA.Models
         public string VIN { get; set; }
         public DateTime FirstRegistrationDate { get; set; }
         public string PlateNumber { get; set; }
-        public State State { get; set; }
+        public States State { get; set; }
         public double Price { get; set; }
         public int Mileage { get; set; }
         public DateTime CarProductionDate { get; set; }
-        public Fuel Fuel { get; set; }
-        public Condition Condition { get; set; }
+        public FuelType Fuel { get; set; }
+        public ConditionState Condition { get; set; }
         public int Horsepower { get; set; }
         public int Displacement { get; set; }
         public string Location { get; set; }
         public bool HasBeenCrashed { get; set; }
-        public TransmissionType TransmissionType { get; set; }
-        public DriveType DriveType { get; set; }
+        public TransmissionTypes TransmissionType { get; set; }
+        public DriveTypes DriveType { get; set; }
         public int VisitCount { get; set; }
         public int GenerationId { get; set; }
+        public string PhoneNumber { get; set; }
         public List<Photo> Photos { get; set; }
         public List<AdvertEquipment> AdvertEquipments { get; set; }
         public Generation Generation { get; set; }

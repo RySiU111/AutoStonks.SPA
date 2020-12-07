@@ -11,13 +11,16 @@
                 </TableRow>
             </TableHeader>
             <TableBody>
-                @foreach (var advert in _adverts)
+                @if(_adverts != null)
                 {
-                    <TableRow>
-                        <TableRowCell>
-                            <ListItem Item="advert"/>
-                        </TableRowCell>
-                    </TableRow>
+                    @foreach (var advert in _adverts)
+                    {
+                        <TableRow>
+                            <TableRowCell>
+                                <ListItem Item="advert"/>
+                            </TableRowCell>
+                        </TableRow>
+                    }
                 }
             </TableBody>
         </Table>

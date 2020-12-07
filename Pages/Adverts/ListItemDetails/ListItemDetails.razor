@@ -1,17 +1,17 @@
 <div class="row justify-content-left">
     <div class="col-12">
-        <span>@Item.Generation.Model.Brand.Name @Item.Generation.Model.Name @Item.Generation.Name</span>
+        <Heading Size="HeadingSize.Is5">@Item?.Generation?.Model?.Brand?.Name @Item?.Generation?.Model?.Name @Item?.Generation?.Name</Heading>
     </div>
     <div class="col-12">
-        <span>@Item.CarProductionDate.ToString("d")</span>
+        <span>@Item?.CarProductionDate.ToString("d")</span>
     </div>
     <div class="col-12">
-        <span>@Item.Mileage</span>
+        <span>@Item?.Mileage km</span>
     </div>
     <div class="col-12">
-        <span>@Item.Displacement</span>
+        <span>@Item?.Displacement cm3</span>
     </div>
     <div class="col-12">
-        <span>@Item.Fuel.ToString()</span>
+        <span>@Item?.Fuel.ToString()</span>
     </div>
 </div>

@@ -1,0 +1,33 @@
+@page "/detailed/{id:int}"
+
+<div class="row justify-content-center">
+    <div class="detailed-carousel col-12">
+        <Carousel @bind-SelectedSlide="@selectedSlide" Autoplay="false">
+            <CarouselSlide Name="1">
+                <div class="row justify-content-center">
+                    <Image class="col-auto" Source="sample-data/assets/supramk3.jpg" Text="Photo1" Display="Display.Block" Style="height:300px;"/>
+                </div>
+            </CarouselSlide>
+            <CarouselSlide Name="2">
+                <div class="row justify-content-center">
+                    <Image class="col-auto" Source="sample-data/assets/256x256.png" Text="Photo2" Display="Display.Always" Style="height: 300px;"/>
+                </div>
+            </CarouselSlide>
+        </Carousel>
+    </div>
+    <div class="detailed-content col-12 mt-2">
+        <Heading Size="HeadingSize.Is2">@_advert?.Generation?.Model?.Brand?.Name @_advert?.Generation?.Model?.Name @_advert?.Generation?.Name</Heading>
+        <Divider />
+        <Badge Color="Color.Secondary">@_advert.Displacement cm3</Badge>
+        <Badge Color="Color.Secondary">@_advert.DriveType</Badge>
+        <Badge Color="Color.Secondary">@_advert.Fuel</Badge>
+    </div>
+</div>
+
+<style>
+    .detailed-carousel {
+        width: 100%;
+        height: 300px;
+        background-color: lightgray;
+    }
+</style>

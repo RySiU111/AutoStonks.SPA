@@ -1,24 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoStonks.SPA.Models;
-using AutoStonks.SPA.Services;
 using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json.Linq;
 
-namespace AutoStonks.SPA.Pages.Adverts.List
+namespace AutoStonks.SPA.Pages.Adverts.Detailed
 {
-    public partial class List : ComponentBase
+    public partial class Detailed : ComponentBase
     {
-        [Inject]
-        public IAdvertService AdvertService { get; set; }
-        private List<Advert> _adverts;
+        [Parameter]
+        public int Id { get; set; }
+
+        private Advert _advert = new Advert();
+        private string selectedSlide = "1";
 
         protected override async Task OnInitializedAsync()
         {
-            // _adverts = await AdvertService.GetAdverts();
-            var advert = new Advert()
+            _advert = new Advert()
             {
                 Id = 1,
                 CarProductionDate = new DateTime(1990,1,1),
@@ -38,9 +35,6 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                     }
                 }
             };
-
-            _adverts = new List<Advert>();
-            _adverts.AddRange(Enumerable.Repeat(advert, 5));
         }
     }
 }
