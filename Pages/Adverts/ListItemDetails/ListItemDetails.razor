@@ -3,15 +3,9 @@
         <Heading Size="HeadingSize.Is5">@Item?.Generation?.Model?.Brand?.Name @Item?.Generation?.Model?.Name @Item?.Generation?.Name</Heading>
     </div>
     <div class="col-12">
-        <span>@Item?.CarProductionDate.ToString("d")</span>
-    </div>
-    <div class="col-12">
-        <span>@Item?.Mileage km</span>
-    </div>
-    <div class="col-12">
-        <span>@Item?.Displacement cm3</span>
-    </div>
-    <div class="col-12">
-        <span>@Item?.Fuel.ToString()</span>
+        <Badge Color="Color.Secondary">@Item?.CarProductionDate.ToString("d")</Badge>
+        <Badge Color="Color.Secondary">@Item?.Mileage km</Badge>
+        <Badge Color="Color.Secondary">@Item?.Displacement cm3</Badge>
+        <Badge Color="Color.Secondary">@Item?.Fuel.ToString()</Badge>
     </div>
 </div>
