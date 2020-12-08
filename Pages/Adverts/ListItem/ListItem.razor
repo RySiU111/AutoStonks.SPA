@@ -1,7 +1,7 @@
 <div class="list-item row justify-content-center">
-    <div class="col-3">
+    <div class="col-3 list-item-img">
         <Figure class="mb-4">
-            <FigureImage Rounded="true" Source="sample-data/assets/256x256.png" AlternateText="256x256"></FigureImage>
+            <FigureImage Rounded="true" Source="@Item.Photos.FirstOrDefault()?.URL" AlternateText="256x256"></FigureImage>
         </Figure>
     </div>
     <div class="col-6">
@@ -13,11 +13,15 @@
 </div>
 
 <style>
-    .figure-img {
-        width: 180px;
+    @* .figure-img {
+        width: 320x;
     }
 
     .list-item {
         height: 180px;
+    } *@
+
+    .list-item-img {
+        min-width: 280px;
     }
 </style>
