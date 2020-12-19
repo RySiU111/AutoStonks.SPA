@@ -95,8 +95,18 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                 }
             };
 
-            _adverts = new List<Advert>();
-            _adverts.AddRange(Enumerable.Repeat(advert, 5));
+            // _adverts = new List<Advert>();
+            // _adverts.AddRange(Enumerable.Repeat(advert, 5));
+            var result = await AdvertService.GetAdverts();
+            result.ForEach(r => 
+                r.Photos = new List<Photo>()
+                {
+                    new Photo()
+                    {
+                        URL = "sample-data/assets/supramk3.jpg"
+                    }
+                });
+            _adverts = result;
         }
     }
 }

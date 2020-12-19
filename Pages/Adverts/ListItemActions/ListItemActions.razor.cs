@@ -10,9 +10,11 @@ namespace AutoStonks.SPA.Pages.Adverts.ListItemActions
         [Parameter]
         public Advert Item { get; set; }
 
-        private void NavigateToDetailed()
-        {
+        private void NavigateToDetailed() =>
             NavigationManager.NavigateTo($"detailed/{Item.Id}");
-        }
+
+        private void NavigateToEdit() =>
+            NavigationManager.NavigateTo($"/advert/form/{Item.Id}");
+            
     }
 }

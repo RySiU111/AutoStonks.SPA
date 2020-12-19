@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoStonks.SPA.Models;
+using AutoStonks.SPA.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace AutoStonks.SPA.Pages.Adverts.Detailed
 {
     public partial class Detailed : ComponentBase
     {
+        [Inject]
+        public IAdvertService AdvertService { get; set; }
+
         [Parameter]
         public int Id { get; set; }
 
@@ -19,7 +23,17 @@ namespace AutoStonks.SPA.Pages.Adverts.Detailed
 
         protected override async Task OnInitializedAsync()
         {
-            _advert = new Advert()
+            _advert = await AdvertService.GetAdvert(Id);
+            _advert.Photos = new List<Photo>()
+            {
+                new Photo()
+                {
+                    URL = "sample-data/assets/supramk3.jpg"
+                    
+                }
+            };
+            // _advert = new Advert()
+            var advert = new Advert()
             {
                 Id = 1,
                 CreationDate = DateTime.Now,

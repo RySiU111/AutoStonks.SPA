@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,9 @@ namespace AutoStonks.SPA.Models
         public DateTime ModificationDate { get; set; }
         public DateTime ExpiryDate { get; set; } //ustawiamy dopiero, gdy otrzymamy płatność
         public bool IsPromoted { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
+        [Required(ErrorMessage = "Pole Vin jest wymagane")]
         public string VIN { get; set; }
         public DateTime FirstRegistrationDate { get; set; }
         public string PlateNumber { get; set; }

@@ -1,13 +1,23 @@
 @page "/advert/form"
+@page "/advert/form/{id:int}"
 @using AutoStonks.SPA.Models
 
 <div class="row justify-content-center">
-    <div class="col-6 pb-4">
-        <EditForm Model="_advert" OnValidSubmit="HandleValidSubmit">
+    <div class="col-12 pb-4">
+        <EditForm class="row justify-content-center" Model="_advert" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="col-6">
+            <Field>
+                <FieldLabel>Tytuł</FieldLabel>
+                <TextEdit Placeholder="Tytuł" 
+                    @bind-Text="_advert.Title"/>
+                <ValidationMessage For="@(() => _advert.Title)" />
+            </Field>
             <Field>
                 <FieldLabel>VIN</FieldLabel>
                 <TextEdit Placeholder="VIN" 
                     @bind-Text="_advert.VIN"/>
+                <ValidationMessage For="@(() => _advert.VIN)" />
             </Field>
             <Field>
                 <FieldLabel>Data Pierwszej rejestracji samochodu</FieldLabel>
@@ -16,9 +26,16 @@
                     @bind-Text="_advert.FirstRegistrationDate"/>
             </Field>
             <Field>
+                <FieldLabel>Data Produkcji</FieldLabel>
+                <DateEdit Placeholder="Data Produkcji" 
+                    TValue="DateTime"
+                    @bind-Text="_advert.CarProductionDate"/>
+            </Field>
+            <Field>
                 <FieldLabel>Numer rejestracyjny</FieldLabel>
                 <TextEdit Placeholder="PlateNumber" 
                     @bind-Text="_advert.PlateNumber"/>
+                <ValidationMessage For="@(() => _advert.PlateNumber)" />
             </Field>
             <Field>
                 <FieldLabel>Cena</FieldLabel>
@@ -26,6 +43,7 @@
                     TValue="double"
                     @bind-Value="_advert.Price"
                     Min="0"/>
+                <ValidationMessage For="@(() => _advert.Price)" />
             </Field>
             <Field>
                 <FieldLabel>Moc</FieldLabel>
@@ -33,6 +51,7 @@
                     TValue="int"
                     @bind-Value="_advert.Horsepower"
                     Min="0"/>
+                <ValidationMessage For="@(() => _advert.Horsepower)" />
             </Field>
             <Field>
                 <FieldLabel>Pojemność skokowa</FieldLabel>
@@ -40,21 +59,25 @@
                     TValue="int "
                     @bind-Value="_advert.Displacement"
                     Min="0"/>
+                <ValidationMessage For="@(() => _advert.Displacement)" />
             </Field>
             <Field>
                 <FieldLabel>Lokacja oferty</FieldLabel>
                 <TextEdit Placeholder="Location" 
                     @bind-Text="_advert.Location"/>
+                <ValidationMessage For="@(() => _advert.Location)" />
             </Field>
             <Field>
-                <FieldLabel>Bezwypadkowy</FieldLabel>
                 <Check
                     TValue="bool" 
                     @bind-Value="_advert.HasBeenCrashed">
-                    HasBeenCrashed</Check>
+                    Bezwypadkowy</Check>
+                <ValidationMessage For="@(() => _advert.HasBeenCrashed)" />
             </Field>
+            </div>
+            <div class="col-6">
             <Field>
-                <FieldLabel>Rodzaj poliwa</FieldLabel>
+                <FieldLabel>Rodzaj paliwa</FieldLabel>
                 <Select TValue="FuelType" @bind-SelectedValue="_advert.Fuel">
                     @foreach(var fuel in Enum.GetValues(typeof(FuelType)).Cast<FuelType>())
                     {
@@ -93,6 +116,7 @@
                 <FieldLabel>Opis</FieldLabel>
                 <MemoEdit Rows="5"  Placeholder="Description"
                     @bind-Text="_advert.Description"/>
+                <ValidationMessage For="@(() => _advert.Description)" />
             </Field>
 
             <!--Brand Model Generation-->
@@ -107,7 +131,14 @@
                     
                 </Field>
             </Fields>
+            </div>
             <Button Type="ButtonType.Submit">Zapisz</Button>
         </EditForm>
     </div>
 </div>
+
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+  <SnackbarBody>
+      @_errorMessage
+  </SnackbarBody>
+</Snackbar>

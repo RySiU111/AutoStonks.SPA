@@ -20,6 +20,7 @@
 
 
     <div class="col-12 mt-2">
+        <Heading Size="HeadingSize.Is2">@_advert?.Title</Heading>
         <Heading Size="HeadingSize.Is2">@_advert?.Generation?.Model?.Brand?.Name @_advert?.Generation?.Model?.Name @_advert?.Generation?.Name</Heading>
         <Divider />
     </div>
@@ -72,10 +73,12 @@
                     <AddonLabel class="detailed-addon-start">VIN</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit Text="@(_hideVIN ? $"{String.Concat(_advert.VIN.Take(3))}*****" : _advert.VIN)" />
+                    <TextEdit Text="@(_hideVIN && !String.IsNullOrEmpty(_advert.VIN) ? $"{String.Concat(_advert.VIN.Take(3))}#####" : _advert.VIN)" />
                 </Addon>
                 <Addon AddonType="AddonType.End">
-                    <Button Color="Color.Secondary" @onclick="@(() => _hideVIN = !_hideVIN)">Odkryj</Button>
+                    <Button Type="ButtonType.Button" 
+                        Color="Color.Secondary" 
+                        @onclick="@(() => _hideVIN = !_hideVIN)">@(_hideVIN ? "Odkryj" : "Zakryj")</Button>
                 </Addon>
             </Addons>
             <Addons class="my-1">
@@ -83,24 +86,28 @@
                     <AddonLabel class="detailed-addon-start">Kontakt</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit Text="@(_hidePhoneNumber ? $"{String.Concat(_advert.PhoneNumber.Take(3))}*****" : _advert.PhoneNumber)" />
+                    <TextEdit Text="@(_hidePhoneNumber && !String.IsNullOrEmpty(_advert.PhoneNumber) ? $"{String.Concat(_advert.PhoneNumber.Take(3))}#####" : _advert.PhoneNumber)" />
                 </Addon>
                 <Addon AddonType="AddonType.End">
-                    <Button Color="Color.Secondary" @onclick="@(() => _hidePhoneNumber = !_hidePhoneNumber)">Odkryj</Button>
+                    <Button Type="ButtonType.Button" 
+                        Color="Color.Secondary" 
+                        @onclick="@(() => _hidePhoneNumber = !_hidePhoneNumber)">@(_hidePhoneNumber ? "Odkryj" : "Zakryj")</Button>
                 </Addon>
             </Addons>
         </div>
+
+
+
         <div class="col-12">
             @if(_advert.AdvertEquipments != null)
             {
                 <Heading class="mt-2" Size="HeadingSize.Is6" Alignment="TextAlignment.Center">Wyposażenie</Heading>
                 @foreach (var eq in _advert.AdvertEquipments)
                 {
-                    <Badge class="m-1" Color="Color.Info">@eq.Equipment.Name</Badge>
+                    <Badge class="m-1" Color="Color.Info">@eq.Equipment?.Name</Badge>
                 }
             }
         </div>
-
     </div>
 </div>
 
