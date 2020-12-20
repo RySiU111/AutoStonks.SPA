@@ -6,8 +6,8 @@ namespace AutoStonks.SPA.Services.BrandService
 {
     public interface IBrandService
     {
-        Task<ServiceResponse<List<Brand>>> GetBrands();
-        Task<ServiceResponse<List<Model>>> GetModel();
-        Task<ServiceResponse<List<Brand>>> GetGeneration();
+        Task<List<Brand>> GetBrands();
+        Task<List<Model>> GetModelsForBrand(int brandId);
+        Task<List<Brand>> GetGenerationsForModel(int modelId);
     }
 }

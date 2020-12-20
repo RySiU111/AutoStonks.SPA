@@ -98,15 +98,18 @@ namespace AutoStonks.SPA.Pages.Adverts.List
             // _adverts = new List<Advert>();
             // _adverts.AddRange(Enumerable.Repeat(advert, 5));
             var result = await AdvertService.GetAdverts();
-            result.ForEach(r => 
-                r.Photos = new List<Photo>()
-                {
-                    new Photo()
+
+            if(result != null)
+                result.ForEach(r => 
+                    r.Photos = new List<Photo>()
                     {
-                        URL = "sample-data/assets/supramk3.jpg"
-                    }
-                });
+                        new Photo()
+                        {
+                            URL = "sample-data/assets/supramk3.jpg"
+                        }
+                    });
             _adverts = result;
+            System.Console.WriteLine(JArray.FromObject(_adverts));
         }
     }
 }

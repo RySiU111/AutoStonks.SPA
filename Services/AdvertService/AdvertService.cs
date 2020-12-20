@@ -65,7 +65,7 @@ namespace AutoStonks.SPA.Services
             return response.Data;
         }
 
-        public async Task<ServiceResponse<List<Advert>>> PostAdvert(Advert advert)
+        public async Task<ServiceResponse<Advert>> PostAdvert(Advert advert)
         {
             if(advert == null)
                 return null;
@@ -85,7 +85,7 @@ namespace AutoStonks.SPA.Services
             return await ResponseToContent(response);
         }
 
-        public async Task<ServiceResponse<List<Advert>>> PutAdvert(Advert advert)
+        public async Task<ServiceResponse<Advert>> PutAdvert(Advert advert)
         {
             if(advert == null)
                 return null;
@@ -108,7 +108,7 @@ namespace AutoStonks.SPA.Services
         private StringContent GetStringContent(Advert advert) => 
             new StringContent(JObject.FromObject(advert).ToString(), Encoding.UTF8, "application/json");
 
-        private async Task<ServiceResponse<List<Advert>>> ResponseToContent(HttpResponseMessage response) =>
-            JObject.Parse(await response.Content.ReadAsStringAsync()).ToObject<ServiceResponse<List<Advert>>>();
+        private async Task<ServiceResponse<Advert>> ResponseToContent(HttpResponseMessage response) =>
+            JObject.Parse(await response.Content.ReadAsStringAsync()).ToObject<ServiceResponse<Advert>>();
     }
 }

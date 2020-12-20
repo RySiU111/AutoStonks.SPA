@@ -122,13 +122,44 @@
             <!--Brand Model Generation-->
             <Fields>
                 <Field ColumnSize="ColumnSize.Is4.OnDesktop">
-
+                    <FieldLabel>Marka</FieldLabel>
+                    <Select TValue="int" @bind-SelectedValue="SelectedBrandId">
+                        <SelectItem Value="0"></SelectItem>
+                        @foreach(var brand in _brands)
+                        {
+                            <SelectItem Value="@brand.Id">@brand.Name</SelectItem>
+                        } 
+                    </Select>
                 </Field>
                 <Field ColumnSize="ColumnSize.Is4.OnDesktop">
-                    
+                    <FieldLabel>Model</FieldLabel>
+                    <Select TValue="int" @bind-SelectedValue="SelectedModelId">
+                        @if(_selectedBrandId > 0)
+                        {
+                            <SelectItem Value="0"></SelectItem>
+                            @foreach(var model in _brands.FirstOrDefault(b => b.Id == _selectedBrandId).Models)
+                            {
+                                <SelectItem Value="@model.Id">@model.Name</SelectItem>
+                            } 
+                        }
+                    </Select>
                 </Field>
                 <Field ColumnSize="ColumnSize.Is4.OnDesktop">
-                    
+                    <FieldLabel>Generacja</FieldLabel>
+                    <Select TValue="int" @bind-SelectedValue="_advert.GenerationId">
+                        @if(_selectedModelId > 0)
+                        {
+                            <SelectItem Value="0"></SelectItem>
+                            @foreach(var gen in _brands
+                                .FirstOrDefault(b => b.Id == _selectedBrandId)
+                                .Models
+                                .FirstOrDefault(m => m.Id == _selectedModelId)
+                                .Generations)
+                            {
+                                <SelectItem Value="@gen.Id">@gen.Name</SelectItem>
+                            } 
+                        }
+                    </Select>
                 </Field>
             </Fields>
             </div>
