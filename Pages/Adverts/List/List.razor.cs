@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using AutoStonks.SPA.Models;
 using AutoStonks.SPA.Services;
+using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json.Linq;
 
@@ -11,17 +13,16 @@ namespace AutoStonks.SPA.Pages.Adverts.List
 {
     public enum Sort
     {
-        Price1,
-        Price2,
-        Data1,
-        Data2,
-        Popular
+        Price1, Price2, Data1, Data2, Popular
     }
+
     public partial class List : ComponentBase
     {
         [Inject]
         public IAdvertService AdvertService { get; set; }
         private List<Advert> _adverts;
+        private Modal _modal;
+        private FilterQuery _filterQuery = new FilterQuery();
 
         protected override async Task OnInitializedAsync()
         {
@@ -117,7 +118,23 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                         }
                     });
             _adverts = result;
-            System.Console.WriteLine(JArray.FromObject(_adverts));
+            // System.Console.WriteLine(JArray.FromObject(_adverts));
+        }
+
+        private void ShowFilters()
+        {
+            _modal.Show();
+        }
+
+        private void HideFilters()
+        {
+            _modal.Hide();
+        }
+
+        private async Task SaveFilters()
+        {
+            await AdvertService.FilterAdvert(_filterQuery);
+            _modal.Hide();
         }
 
         private void SortList(Sort sort)

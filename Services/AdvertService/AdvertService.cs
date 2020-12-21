@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Web;
+using System.Reflection;
 
 namespace AutoStonks.SPA.Services
 {
@@ -20,6 +22,34 @@ namespace AutoStonks.SPA.Services
         {
             _http = http;
             _baseUrl = config["ServiceUrl"];
+        }
+
+        public async Task<List<Advert>> FilterAdvert(FilterQuery filterQuery)
+        {
+            var builder = new UriBuilder($"{_baseUrl}advert");
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            var properties = typeof(FilterQuery).GetProperties();
+            var defaultFilters = new FilterQuery();
+            
+            foreach(var p in properties)
+            {
+                if(p.GetValue(filterQuery) != null &&
+                    p.PropertyType.IsValueType &&
+                    p.GetValue(filterQuery).GetHashCode() != 
+                    p.GetValue(defaultFilters)?.GetHashCode())
+                {
+                    query[p.Name] = p.GetValue(filterQuery).ToString();
+                }
+                else if(p.PropertyType == typeof(string) && !String.IsNullOrEmpty((string)p.GetValue(filterQuery)))
+                {
+                    query[p.Name] = p.GetValue(filterQuery).ToString();
+                }
+            }
+
+            builder.Query = query.ToString();
+            System.Console.WriteLine(builder.ToString());
+
+            return null;
         }
 
         public async Task<Advert> GetAdvert(int id)

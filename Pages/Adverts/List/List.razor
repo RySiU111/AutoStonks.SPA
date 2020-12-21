@@ -1,4 +1,5 @@
 @page "/"
+@using AutoStonks.SPA.Models
 
 <div class="row justify-content-center">
     <div class="col-12">
@@ -7,7 +8,7 @@
                 <TableRow>
                     <TableHeaderCell class="row justify-content-center">
                         <!--Sort-->
-                        <div class="col-6">
+                        <div class="col-3">
                             <Field>
                                 <FieldLabel>Filtry</FieldLabel>
                                 <Select TValue="Sort" SelectedValueChanged="SortList">
@@ -18,7 +19,16 @@
                                 </Select>
                             </Field>
                         </div>
+                        <div class="col"></div>
                         <!--Filters-->
+                        <div class="col-3">
+                            <Button
+                                class="col-12"
+                                @onclick="ShowFilters"
+                                Type="ButtonType.Button" 
+                                Color="Color.Info">
+                                Filtry</Button>
+                        </div>
                     </TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -38,3 +48,114 @@
         </Table>
     </div>
 </div>
+
+<Modal @ref="_modal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">
+        <ModalHeader>
+            <ModalTitle>Filtry</ModalTitle>
+            <CloseButton Clicked="@HideFilters" />
+        </ModalHeader>
+        
+        <EditForm class="row justify-content-center px-3" Model="_filterQuery" OnValidSubmit="SaveFilters">
+            <ModalBody>
+                <DataAnnotationsValidator />
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Cena Min</FieldLabel>
+                        <NumericEdit TValue="double" Placeholder="Cena Min" 
+                            @bind-Value="_filterQuery.MinPrice"/>
+                        <ValidationMessage For="@(() => _filterQuery.MinPrice)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Cena Max</FieldLabel>
+                        <NumericEdit TValue="double" Placeholder="Cena Max" 
+                            @bind-Value="_filterQuery.MaxPrice"/>
+                        <ValidationMessage For="@(() => _filterQuery.MaxPrice)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Przebieg Min</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Przebieg Min" 
+                            @bind-Value="_filterQuery.MinMileage"/>
+                        <ValidationMessage For="@(() => _filterQuery.MinMileage)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Przebieg Max</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Przebieg Max" 
+                            @bind-Value="_filterQuery.MaxMileage"/>
+                        <ValidationMessage For="@(() => _filterQuery.MaxMileage)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is3.OnDesktop">
+                        <FieldLabel>Rodzaj paliwa</FieldLabel>
+                        <Select TValue="FuelType?" @bind-SelectedValue="_filterQuery.Fuel">
+                            <SelectItem Value="(FuelType?)null"></SelectItem>
+                            @foreach(var fuel in Enum.GetValues(typeof(FuelType)).Cast<FuelType>())
+                            {
+                                <SelectItem Value="@fuel">@fuel</SelectItem>
+                            } 
+                        </Select>
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is3.OnDesktop">
+                        <FieldLabel>Kondycja</FieldLabel>
+                        <Select TValue="ConditionState?" @bind-SelectedValue="_filterQuery.Condition">
+                            <SelectItem Value="(ConditionState?)null"></SelectItem>
+                            @foreach(var condition in Enum.GetValues(typeof(ConditionState)).Cast<ConditionState>())
+                            {
+                                <SelectItem Value="@condition">@condition</SelectItem>
+                            } 
+                        </Select>
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is3.OnDesktop">
+                        <FieldLabel>Napęd</FieldLabel>
+                        <Select TValue="DriveTypes?" @bind-SelectedValue="_filterQuery.DriveType">
+                            <SelectItem Value="(DriveTypes?)null"></SelectItem>
+                            @foreach(var driveType in Enum.GetValues(typeof(DriveTypes)).Cast<DriveTypes>())
+                            {
+                                <SelectItem Value="@driveType">@driveType</SelectItem>
+                            } 
+                        </Select>
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is3.OnDesktop">
+                        <FieldLabel>Skrzynia biegów</FieldLabel>
+                        <Select TValue="TransmissionTypes?" @bind-SelectedValue="_filterQuery.TransmissionType">
+                            <SelectItem Value="(TransmissionTypes?)null"></SelectItem>
+                            @foreach(var transmissionType in Enum.GetValues(typeof(TransmissionTypes)).Cast<TransmissionTypes>())
+                            {
+                                <SelectItem Value="@transmissionType">@transmissionType</SelectItem>
+                            } 
+                        </Select>
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Moc Min</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Moc Min" 
+                            @bind-Value="_filterQuery.MinHorsepower"/>
+                        <ValidationMessage For="@(() => _filterQuery.MinHorsepower)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Moc Max</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Moc Max" 
+                            @bind-Value="_filterQuery.MaxHorsepower"/>
+                        <ValidationMessage For="@(() => _filterQuery.MaxHorsepower)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Pojemność Silnika Min</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Moc Min" 
+                            @bind-Value="_filterQuery.MinDisplacement"/>
+                        <ValidationMessage For="@(() => _filterQuery.MinDisplacement)" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6.OnDesktop">
+                        <FieldLabel>Pojemność Silnika Max</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Moc Max" 
+                            @bind-Value="_filterQuery.MaxDisplacement"/>
+                        <ValidationMessage For="@(() => _filterQuery.MaxDisplacement)" />
+                    </Field>
+                </Fields>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="@HideFilters">Zamknij</Button>
+                <Button Type="ButtonType.Submit" Color="Color.Primary">Zapisz Filtry</Button>
+            </ModalFooter>
+        </EditForm>
+
+    </ModalContent>
+</Modal>
