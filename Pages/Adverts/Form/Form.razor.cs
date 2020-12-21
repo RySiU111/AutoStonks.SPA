@@ -78,11 +78,17 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
                 return;
 
             _advert = response;
-        }
 
-        private void BrandChangedHandler()
-        {
+            _brands = await BrandService.GetBrands();
+            _brands = _brands.OrderBy(b => b.Name).ToList();
 
+            if(_advert.Generation != null)
+            {
+                _selectedBrandId = _advert.Generation.Model.Brand.Id;
+                _selectedModelId = _advert.Generation.Model.Id;
+            }
+
+            System.Console.WriteLine(JObject.FromObject(_advert));
         }
 
         private async Task HandleValidSubmit()
@@ -92,9 +98,16 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             ServiceResponse<Advert> response;
 
             if(Id > 0)
+            {
+                _advert.ModificationDate = DateTime.Now;
                 response = await AdvertService.PutAdvert(_advert);
+            }
             else
+            {
+                _advert.CreationDate = DateTime.Now;
                 response = await AdvertService.PostAdvert(_advert);
+            }
+                
 
             System.Console.WriteLine(JObject.FromObject(_advert));
             if(!response.Success)

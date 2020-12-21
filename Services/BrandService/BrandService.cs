@@ -21,7 +21,16 @@ namespace AutoStonks.SPA.Services.BrandService
 
         public async Task<List<Brand>> GetBrands()
         {
-            var response = await _http.GetAsync($"{_baseUrl}brand");
+            HttpResponseMessage response;
+            try
+            {
+                response = await _http.GetAsync($"{_baseUrl}brand");
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
 
             if(!response.IsSuccessStatusCode)
                 return null;

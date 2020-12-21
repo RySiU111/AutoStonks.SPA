@@ -5,7 +5,19 @@
         <Table FullWidth="true" Hoverable="false" >
             <TableHeader ThemeContrast="ThemeContrast.Dark">
                 <TableRow>
-                    <TableHeaderCell>
+                    <TableHeaderCell class="row justify-content-center">
+                        <!--Sort-->
+                        <div class="col-6">
+                            <Field>
+                                <FieldLabel>Filtry</FieldLabel>
+                                <Select TValue="Sort" SelectedValueChanged="SortList">
+                                    @foreach(var sort in Enum.GetValues(typeof(Sort)).Cast<Sort>())
+                                    {
+                                        <SelectItem Value="@sort">@sort</SelectItem>
+                                    } 
+                                </Select>
+                            </Field>
+                        </div>
                         <!--Filters-->
                     </TableHeaderCell>
                 </TableRow>

@@ -133,7 +133,7 @@
                 </Field>
                 <Field ColumnSize="ColumnSize.Is4.OnDesktop">
                     <FieldLabel>Model</FieldLabel>
-                    <Select TValue="int" @bind-SelectedValue="SelectedModelId">
+                    <Select TValue="int" @bind-SelectedValue="SelectedModelId" >
                         @if(_selectedBrandId > 0)
                         {
                             <SelectItem Value="0"></SelectItem>

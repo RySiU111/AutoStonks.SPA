@@ -9,6 +9,14 @@ using Newtonsoft.Json.Linq;
 
 namespace AutoStonks.SPA.Pages.Adverts.List
 {
+    public enum Sort
+    {
+        Price1,
+        Price2,
+        Data1,
+        Data2,
+        Popular
+    }
     public partial class List : ComponentBase
     {
         [Inject]
@@ -110,6 +118,38 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                     });
             _adverts = result;
             System.Console.WriteLine(JArray.FromObject(_adverts));
+        }
+
+        private void SortList(Sort sort)
+        {
+            switch(sort)
+            {
+                case Sort.Price1: 
+                {
+                    _adverts = _adverts.OrderBy(a => a.Price).ToList();
+                    break;
+                }
+                case Sort.Price2: 
+                {
+                    _adverts = _adverts.OrderByDescending(a => a.Price).ToList();
+                    break;
+                }
+                case Sort.Data1: 
+                {
+                    _adverts = _adverts.OrderBy(a => a.CreationDate).ToList();
+                    break;
+                }
+                case Sort.Data2: 
+                {
+                    _adverts = _adverts.OrderByDescending(a => a.CreationDate).ToList();
+                    break;
+                }
+                case Sort.Popular: 
+                {
+                    _adverts = _adverts.OrderByDescending(a => a.VisitCount).ToList();
+                    break;
+                }
+            }
         }
     }
 }
