@@ -23,11 +23,17 @@
                         <!--Filters-->
                         <div class="col-3">
                             <Button
-                                class="col-12"
+                                class="col-12 my-1"
                                 @onclick="ShowFilters"
                                 Type="ButtonType.Button" 
                                 Color="Color.Info">
                                 Filtry</Button>
+                            <Button
+                                class="col-12 my-1"
+                                @onclick="ClearFilters"
+                                Type="ButtonType.Button" 
+                                Color="Color.Info">
+                                Wyczyść Filtry</Button>
                         </div>
                     </TableHeaderCell>
                 </TableRow>
@@ -49,6 +55,7 @@
     </div>
 </div>
 
+<!--Filter Modal-->
 <Modal @ref="_modal">
     <ModalBackdrop />
     <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">

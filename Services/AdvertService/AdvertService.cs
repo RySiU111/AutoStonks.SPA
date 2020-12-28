@@ -26,7 +26,7 @@ namespace AutoStonks.SPA.Services
 
         public async Task<List<Advert>> FilterAdvert(FilterQuery filterQuery)
         {
-            var builder = new UriBuilder($"{_baseUrl}advert");
+            var builder = new UriBuilder($"{_baseUrl}advert/query");
             var query = HttpUtility.ParseQueryString(builder.Query);
             var properties = typeof(FilterQuery).GetProperties();
             var defaultFilters = new FilterQuery();
@@ -49,7 +49,19 @@ namespace AutoStonks.SPA.Services
             builder.Query = query.ToString();
             System.Console.WriteLine(builder.ToString());
 
-            return null;
+            ServiceResponse<List<Advert>> result;
+
+            try
+            {
+                result = await _http.GetFromJsonAsync<ServiceResponse<List<Advert>>>(builder.ToString());
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+
+            return result.Data;
         }
 
         public async Task<Advert> GetAdvert(int id)

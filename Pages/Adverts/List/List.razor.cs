@@ -13,7 +13,7 @@ namespace AutoStonks.SPA.Pages.Adverts.List
 {
     public enum Sort
     {
-        Price1, Price2, Data1, Data2, Popular
+        Data1, Data2, Price1, Price2, Popular
     }
 
     public partial class List : ComponentBase
@@ -106,6 +106,13 @@ namespace AutoStonks.SPA.Pages.Adverts.List
 
             // _adverts = new List<Advert>();
             // _adverts.AddRange(Enumerable.Repeat(advert, 5));
+            
+            _adverts = await GetAdverts();
+            // System.Console.WriteLine(JArray.FromObject(_adverts));
+        }
+
+        private async Task<List<Advert>> GetAdverts()
+        {
             var result = await AdvertService.GetAdverts();
 
             if(result != null)
@@ -117,8 +124,7 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                             URL = "sample-data/assets/supramk3.jpg"
                         }
                     });
-            _adverts = result;
-            // System.Console.WriteLine(JArray.FromObject(_adverts));
+            return result.OrderBy(r => r.CreationDate).ToList();
         }
 
         private void ShowFilters()
@@ -133,8 +139,17 @@ namespace AutoStonks.SPA.Pages.Adverts.List
 
         private async Task SaveFilters()
         {
-            await AdvertService.FilterAdvert(_filterQuery);
+            var result = await AdvertService.FilterAdvert(_filterQuery);
+            System.Console.WriteLine(JArray.FromObject(result));
+            _adverts = result;
+
             _modal.Hide();
+        }
+
+        private async Task ClearFilters()
+        {
+            _filterQuery = new FilterQuery();
+            _adverts = await GetAdverts();
         }
 
         private void SortList(Sort sort)
