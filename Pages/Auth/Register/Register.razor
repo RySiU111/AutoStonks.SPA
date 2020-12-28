@@ -1,0 +1,42 @@
+@page "/register"
+
+<div class="row justify-content-left">
+    <div class="col-auto">
+        <EditForm Model="_userCredentials" OnValidSubmit="HandleValidSubmit">
+            <Heading Size="HeadingSize.Is3" class="mb-4">Rejestracja</Heading>
+            <DataAnnotationsValidator />
+            <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+
+            <Field>
+                <FieldLabel>Login</FieldLabel>
+                <TextEdit Placeholder="Login" 
+                    @bind-Text="_userCredentials.Username"/>
+            </Field>
+            <Field>
+                <FieldLabel>Email</FieldLabel>
+                <TextEdit Placeholder="Email" 
+                    Role="TextRole.Email"
+                    @bind-Text="_userCredentials.EmailAddress"/>
+            </Field>
+            <Field>
+                <FieldLabel>Hasło</FieldLabel>
+                <TextEdit Placeholder="Hasło" 
+                    Role="TextRole.Password"
+                    @bind-Text="_userCredentials.Password"/>
+            </Field>
+            <Field>
+                <FieldLabel>Potwierdź Hasło</FieldLabel>
+                <TextEdit Placeholder="Hasło" 
+                    Role="TextRole.Password"
+                    @bind-Text="_confirmPassword"/>
+            </Field>
+            <Button Type="ButtonType.Submit">Zarejestruj</Button>
+        </EditForm>
+    </div>
+</div>
+
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+  <SnackbarBody>
+      @_errorMessage
+  </SnackbarBody>
+</Snackbar>

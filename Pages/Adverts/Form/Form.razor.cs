@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoStonks.SPA.Models;
 using AutoStonks.SPA.Services;
+using AutoStonks.SPA.Services.AuthService;
 using AutoStonks.SPA.Services.BrandService;
 using Blazorise.Snackbar;
 using Microsoft.AspNetCore.Components;
@@ -27,6 +28,9 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public IAuthService AuthService { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -62,9 +66,15 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         private int _selectedModelId;
         private Snackbar _snackbar;
         private string _errorMessage;
+        private User _user;
 
         protected override async Task OnInitializedAsync()
         {
+            var isAuthenticated = await CheckUser();
+
+            if(!isAuthenticated)
+                return;
+            
             if(Id <= 0)
             {
                 _brands = await BrandService.GetBrands();
@@ -93,8 +103,6 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private async Task HandleValidSubmit()
         {
-            // _advert.GenerationId = 1;
-            _advert.UserId = 1;
             ServiceResponse<Advert> response;
 
             if(Id > 0)
@@ -104,6 +112,12 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             }
             else
             {
+                var isAuthenticated = await CheckUser();
+
+                if(!isAuthenticated)
+                    return;
+
+                _advert.UserId = _user.Id;
                 _advert.CreationDate = DateTime.Now;
                 response = await AdvertService.PostAdvert(_advert);
             }
@@ -123,6 +137,23 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             {
                 NavigationManager.NavigateTo("/");
             }
+        }
+
+        private async Task<bool> CheckUser()
+        {
+            if(_user == null)
+            {
+                _user = await AuthService.GetUser();
+
+                if(_user == null)
+                {
+                    var redirectUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri).Replace('/','_');
+                    NavigationManager.NavigateTo($"login/{redirectUrl}");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

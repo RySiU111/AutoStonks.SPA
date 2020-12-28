@@ -1,0 +1,31 @@
+@page "/login"
+@page "/login/{RedirectUrl}"
+
+<div class="row justify-content-left">
+    <div class="col-auto">
+        <EditForm Model="_userCredentials" OnValidSubmit="HandleValidSubmit">
+            <Heading Size="HeadingSize.Is3" class="mb-4">Logowanie</Heading>
+            <DataAnnotationsValidator />
+            <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+
+            <Field>
+                <FieldLabel>Login</FieldLabel>
+                <TextEdit Placeholder="Login" 
+                    @bind-Text="_userCredentials.Username"/>
+            </Field>
+            <Field>
+                <FieldLabel>Hasło</FieldLabel>
+                <TextEdit Placeholder="Hasło" 
+                    Role="TextRole.Password"
+                    @bind-Text="_userCredentials.Password"/>
+            </Field>
+            <Button Type="ButtonType.Submit">Zaloguj</Button>
+        </EditForm>
+    </div>
+</div>
+
+<Snackbar @ref="_snackbar">
+  <SnackbarBody>
+      @_message
+  </SnackbarBody>
+</Snackbar>

@@ -12,6 +12,7 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using AutoStonks.SPA.Services;
 using AutoStonks.SPA.Services.BrandService;
+using AutoStonks.SPA.Services.AuthService;
 
 namespace AutoStonks.SPA
 {
@@ -26,6 +27,7 @@ namespace AutoStonks.SPA
                 .AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
                 .AddScoped<IAdvertService, AdvertService>()
                 .AddScoped<IBrandService, BrandService>()
+                .AddScoped<IAuthService, AuthService>()
                 .AddBlazorise( options =>
                     {
                         options.ChangeTextOnKeyPress = true;

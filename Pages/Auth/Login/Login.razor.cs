@@ -1,0 +1,61 @@
+using System;
+using System.Threading.Tasks;
+using AutoStonks.SPA.Models;
+using AutoStonks.SPA.Services.AuthService;
+using Blazorise.Snackbar;
+using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json.Linq;
+
+namespace AutoStonks.SPA.Pages.Auth.Login
+{
+    public partial class Login
+    {
+        [Inject]
+        public IAuthService AuthService { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManger { get; set; }
+
+        [Parameter]
+        public string RedirectUrl { get; set; }
+
+        private User _userCredentials = new User();
+        private string _message;
+        private Snackbar _snackbar;
+
+        private async Task HandleValidSubmit()
+        {
+            var response = await AuthService.Login(_userCredentials);
+
+            if(!response.Success)
+            {
+                _userCredentials = new User();
+                System.Console.WriteLine(response.Message);
+                SetSnackbar(response.Message, SnackbarColor.Danger);
+            }
+            else
+            {
+                if(!String.IsNullOrEmpty(RedirectUrl))
+                    NavigationManger.NavigateTo(RedirectUrl.Replace('_','/'));
+                else
+                    NavigationManger.NavigateTo("/");
+            } 
+        }
+
+        private async Task GetUser()
+        {
+            var user = await AuthService.GetUser();
+            System.Console.WriteLine(user.Role);
+        }
+
+        private void SetSnackbar(string message, SnackbarColor color)
+        {
+            _message = message;
+            _snackbar.Interval = 15000;
+            _snackbar.Location = SnackbarLocation.Right;
+            _snackbar.Multiline = true;
+            _snackbar.Color = color;
+            _snackbar.Show();
+        }
+    }
+}

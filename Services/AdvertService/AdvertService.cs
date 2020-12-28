@@ -16,7 +16,7 @@ namespace AutoStonks.SPA.Services
     public class AdvertService : IAdvertService
     {
         private HttpClient _http;
-        private string _baseUrl = "http://localhost:5000/";
+        private string _baseUrl;
 
         public AdvertService(HttpClient http, IConfiguration config)
         {
