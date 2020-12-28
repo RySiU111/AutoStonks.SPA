@@ -47,7 +47,6 @@ namespace AutoStonks.SPA.Services
             }
 
             builder.Query = query.ToString();
-            System.Console.WriteLine(builder.ToString());
 
             ServiceResponse<List<Advert>> result;
 

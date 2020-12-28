@@ -10,7 +10,7 @@
                         <!--Sort-->
                         <div class="col-3">
                             <Field>
-                                <FieldLabel>Filtry</FieldLabel>
+                                <FieldLabel>Sortowanie</FieldLabel>
                                 <Select TValue="Sort" SelectedValueChanged="SortList">
                                     @foreach(var sort in Enum.GetValues(typeof(Sort)).Cast<Sort>())
                                     {

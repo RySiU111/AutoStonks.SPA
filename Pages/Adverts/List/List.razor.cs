@@ -124,7 +124,8 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                             URL = "sample-data/assets/supramk3.jpg"
                         }
                     });
-            return result.OrderBy(r => r.CreationDate).ToList();
+            
+            return result?.OrderBy(r => r.CreationDate).ToList();
         }
 
         private void ShowFilters()
@@ -140,7 +141,6 @@ namespace AutoStonks.SPA.Pages.Adverts.List
         private async Task SaveFilters()
         {
             var result = await AdvertService.FilterAdvert(_filterQuery);
-            System.Console.WriteLine(JArray.FromObject(result));
             _adverts = result;
 
             _modal.Hide();

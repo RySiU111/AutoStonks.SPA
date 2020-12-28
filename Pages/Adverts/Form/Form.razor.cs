@@ -200,6 +200,8 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
                 else
                     _equipment.Add(new EquipmentActive(eq, false));
             }
+
+            _equipment = _equipment.OrderBy(e => e.Equipment.Name).ToList();
         }
 
         private void HideModal() => _equipmentModal.Hide();
