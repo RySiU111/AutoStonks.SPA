@@ -121,7 +121,7 @@
 
             <!--Brand Model Generation-->
             <Fields>
-                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+                <Field class="mb-0" ColumnSize="ColumnSize.Is4.OnDesktop">
                     <FieldLabel>Marka</FieldLabel>
                     <Select TValue="int" @bind-SelectedValue="SelectedBrandId">
                         <SelectItem Value="0"></SelectItem>
@@ -131,7 +131,7 @@
                         } 
                     </Select>
                 </Field>
-                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+                <Field class="mb-0" ColumnSize="ColumnSize.Is4.OnDesktop">
                     <FieldLabel>Model</FieldLabel>
                     <Select TValue="int" @bind-SelectedValue="SelectedModelId" >
                         @if(_selectedBrandId > 0)
@@ -144,7 +144,7 @@
                         }
                     </Select>
                 </Field>
-                <Field ColumnSize="ColumnSize.Is4.OnDesktop">
+                <Field class="mb-0" ColumnSize="ColumnSize.Is4.OnDesktop">
                     <FieldLabel>Generacja</FieldLabel>
                     <Select TValue="int" @bind-SelectedValue="_advert.GenerationId">
                         @if(_selectedModelId > 0)
@@ -162,12 +162,44 @@
                     </Select>
                 </Field>
             </Fields>
+            <ValidationMessage For="@(() => _advert.GenerationId)" />
+            <Button class="col-12 mt-3" 
+                Color="Color.Primary" 
+                Clicked="@ShowModal">
+                Zarządzaj Wyposażeniem
+            </Button>
             </div>
             <Button Type="ButtonType.Submit">Zapisz</Button>
         </EditForm>
     </div>
 </div>
 
+<Modal @ref="_equipmentModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">
+        <ModalHeader>
+            <ModalTitle>Wyposażenie</ModalTitle>
+            <CloseButton Clicked="@HideModal" />
+        </ModalHeader>
+        <ModalBody>
+            <Fields class="row justify-content-center">
+            @foreach(var eq in _equipment)
+            {
+                <Field class="col-6">
+                    <Check TValue="bool"
+                        @bind-Checked="eq.Active">
+                        @eq.Equipment.Name</Check>
+                </Field>
+            }
+            </Fields>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="@HideModal">Close</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<!--Error snackbar-->
 <Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
   <SnackbarBody>
       @_errorMessage

@@ -65,6 +65,8 @@ namespace AutoStonks.SPA.Models
         public TransmissionTypes TransmissionType { get; set; }
         public DriveTypes DriveType { get; set; }
         public int VisitCount { get; set; }
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Pola Marka, Model i Generacja są wymagane.")]
         public int GenerationId { get; set; }
         public string PhoneNumber { get; set; }
         public List<Photo> Photos { get; set; }

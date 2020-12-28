@@ -7,6 +7,7 @@ namespace AutoStonks.SPA.Services
     public interface IAdvertService
     {
         Task<List<Advert>> GetAdverts();
+        Task<List<Equipment>> GetEquipment();
         Task<ServiceResponse<Advert>> PostAdvert(Advert advert);
         Task<ServiceResponse<Advert>> PutAdvert(Advert advert);
         Task<Advert> GetAdvert(int id);
