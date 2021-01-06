@@ -192,7 +192,7 @@
     <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">
         <ModalHeader>
             <ModalTitle>Wyposażenie</ModalTitle>
-            <CloseButton Clicked="@HideModal" />
+            @* <CloseButton Clicked="@HideModal" /> *@
         </ModalHeader>
         <ModalBody>
             <Fields class="row justify-content-center">
@@ -207,7 +207,7 @@
             </Fields>
         </ModalBody>
         <ModalFooter>
-            <Button Color="Color.Primary" Clicked="@HideModal">Close</Button>
+            <Button Color="Color.Primary" Clicked="@HideModal">Zapisz</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>

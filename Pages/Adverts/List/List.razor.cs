@@ -73,12 +73,12 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                     new Photo()
                     {
                         Id = 1,
-                        URL = "sample-data/assets/supramk3.jpg",
+                        Source = "sample-data/assets/supramk3.jpg",
                     },
                     new Photo()
                     {
                         Id = 2,
-                        URL = "sample-data/assets/256x256.png",
+                        Source = "sample-data/assets/256x256.png",
                     },
                 },
                 AdvertEquipments = new List<AdvertEquipment>()
@@ -115,15 +115,15 @@ namespace AutoStonks.SPA.Pages.Adverts.List
         {
             var result = await AdvertService.GetAdverts();
 
-            if(result != null)
-                result.ForEach(r => 
-                    r.Photos = new List<Photo>()
-                    {
-                        new Photo()
-                        {
-                            URL = "sample-data/assets/supramk3.jpg"
-                        }
-                    });
+            // if(result != null)
+            //     result.ForEach(r => 
+            //         r.Photos = new List<Photo>()
+            //         {
+            //             new Photo()
+            //             {
+            //                 Source = "sample-data/assets/supramk3.jpg"
+            //             }
+            //         });
             
             return result?.OrderBy(r => r.CreationDate).ToList();
         }

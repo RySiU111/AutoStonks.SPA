@@ -218,18 +218,17 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
                         await file.WriteToStreamAsync(str);
                         str.Seek(0,SeekOrigin.Begin);
 
-                        using(var reader = new StreamReader(str))
+                        var photo = new Photo()
                         {
-                            var photo = new Photo()
-                            {
-                                URL = await reader.ReadToEndAsync()
-                            };
+                            Name = file.Name,
+                            Source = $"data:{file.Type};base64, {Convert.ToBase64String(str.ToArray())}"
+                        };
 
-                            if(_advert.Photos == null)
-                                _advert.Photos = new List<Photo>();
+                        if(_advert.Photos == null)
+                            _advert.Photos = new List<Photo>();
 
-                            _advert.Photos.Add(photo);
-                        }
+                        _advert.Photos.Add(photo);
+                    
                         _progressBarValue = null;
                     }
                 }

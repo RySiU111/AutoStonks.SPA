@@ -24,14 +24,14 @@ namespace AutoStonks.SPA.Pages.Adverts.Detailed
         protected override async Task OnInitializedAsync()
         {
             _advert = await AdvertService.GetAdvert(Id);
-            _advert.Photos = new List<Photo>()
-            {
-                new Photo()
-                {
-                    URL = "sample-data/assets/supramk3.jpg"
+            // _advert.Photos = new List<Photo>()
+            // {
+            //     new Photo()
+            //     {
+            //         Source = "sample-data/assets/supramk3.jpg"
                     
-                }
-            };
+            //     }
+            // };
             // _advert = new Advert()
             var advert = new Advert()
             {
@@ -79,12 +79,12 @@ namespace AutoStonks.SPA.Pages.Adverts.Detailed
                     new Photo()
                     {
                         Id = 1,
-                        URL = "sample-data/assets/supramk3.jpg",
+                        Source = "sample-data/assets/supramk3.jpg",
                     },
                     new Photo()
                     {
                         Id = 2,
-                        URL = "sample-data/assets/256x256.png",
+                        Source = "sample-data/assets/256x256.png",
                     },
                 },
                 AdvertEquipments = new List<AdvertEquipment>()
