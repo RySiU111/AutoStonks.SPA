@@ -62,7 +62,7 @@
                     <AddonLabel class="detailed-addon-start">Cena</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit Color="Color.Success" Text="@_advert.Price.ToString()" />
+                    <TextEdit ReadOnly="true" Color="Color.Success" Text="@_advert.Price.ToString()" />
                 </Addon>
                 <Addon AddonType="AddonType.End">
                     <AddonLabel>zł</AddonLabel>
@@ -73,7 +73,7 @@
                     <AddonLabel class="detailed-addon-start">VIN</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit Text="@(_hideVIN && !String.IsNullOrEmpty(_advert.VIN) ? $"{String.Concat(_advert.VIN.Take(3))}#####" : _advert.VIN)" />
+                    <TextEdit ReadOnly="true" Text="@(_hideVIN && !String.IsNullOrEmpty(_advert.VIN) ? $"{String.Concat(_advert.VIN.Take(3))}#####" : _advert.VIN)" />
                 </Addon>
                 <Addon AddonType="AddonType.End">
                     <Button Type="ButtonType.Button" 
@@ -86,7 +86,7 @@
                     <AddonLabel class="detailed-addon-start">Kontakt</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit Text="@(_hidePhoneNumber && !String.IsNullOrEmpty(_advert.PhoneNumber) ? $"{String.Concat(_advert.PhoneNumber.Take(3))}#####" : _advert.PhoneNumber)" />
+                    <TextEdit ReadOnly="true" Text="@(_hidePhoneNumber && !String.IsNullOrEmpty(_advert.PhoneNumber) ? $"{String.Concat(_advert.PhoneNumber.Take(3))}#####" : _advert.PhoneNumber)" />
                 </Addon>
                 <Addon AddonType="AddonType.End">
                     <Button Type="ButtonType.Button" 

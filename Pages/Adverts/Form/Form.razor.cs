@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -82,6 +83,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         private Modal _equipmentModal;
         private string _errorMessage;
         private User _user;
+        private int? _progressBarValue = null;
         private List<EquipmentActive> _equipment = new List<EquipmentActive>();
         protected override async Task OnInitializedAsync()
         {
@@ -202,6 +204,48 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             }
 
             _equipment = _equipment.OrderBy(e => e.Equipment.Name).ToList();
+        }
+
+        private async Task OnFileChanged(FileChangedEventArgs args)
+        {
+            try
+            {
+                foreach(var file in args.Files)
+                {
+                    using(var str = new MemoryStream())
+                    {
+                        _progressBarValue = 0;
+                        await file.WriteToStreamAsync(str);
+                        str.Seek(0,SeekOrigin.Begin);
+
+                        using(var reader = new StreamReader(str))
+                        {
+                            var photo = new Photo()
+                            {
+                                URL = await reader.ReadToEndAsync()
+                            };
+
+                            if(_advert.Photos == null)
+                                _advert.Photos = new List<Photo>();
+
+                            _advert.Photos.Add(photo);
+                        }
+                        _progressBarValue = null;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
+
+        void OnProgressed(FileProgressedEventArgs e)
+        {
+            _progressBarValue = Convert.ToInt32(e.Percentage);
+            System.Console.WriteLine(_progressBarValue);
+            
+            StateHasChanged();
         }
 
         private void HideModal() => _equipmentModal.Hide();

@@ -163,13 +163,26 @@
                 </Field>
             </Fields>
             <ValidationMessage For="@(() => _advert.GenerationId)" />
+
+            <Field class="my-2">
+                <FieldLabel>Zdjęcia</FieldLabel>
+                <FileEdit Filter="image/*" Multiple="true" Changed="OnFileChanged" Progressed="OnProgressed"/>
+            </Field>
+
+            @if(_progressBarValue != null)
+            {
+                <Blazorise.ProgressBar Animated="true" Striped="true"  Min="0" Max="100" Value="_progressBarValue" />
+            }
+
+            
+
             <Button class="col-12 mt-3" 
                 Color="Color.Primary" 
                 Clicked="@ShowModal">
                 Zarządzaj Wyposażeniem
             </Button>
             </div>
-            <Button Type="ButtonType.Submit">Zapisz</Button>
+            <Button Type="ButtonType.Submit" Color="Color.Success" Disabled="@(_progressBarValue != null)">Zapisz</Button>
         </EditForm>
     </div>
 </div>

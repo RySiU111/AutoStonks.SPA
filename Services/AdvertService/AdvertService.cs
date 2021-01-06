@@ -142,7 +142,7 @@ namespace AutoStonks.SPA.Services
                 System.Console.WriteLine(e.Message);
                 return null;
             }
-
+            System.Console.WriteLine(await response.Content.ReadAsStringAsync());
             return await ResponseToContent(response);
         }
 
