@@ -48,7 +48,7 @@ namespace AutoStonks.SPA.Models
         public bool IsPromoted { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        [Required(ErrorMessage = "Pole Vin jest wymagane")]
+        // [Required(ErrorMessage = "Pole Vin jest wymagane")]
         public string VIN { get; set; }
         public DateTime FirstRegistrationDate { get; set; }
         public string PlateNumber { get; set; }

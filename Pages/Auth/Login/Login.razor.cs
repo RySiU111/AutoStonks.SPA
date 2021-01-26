@@ -30,7 +30,6 @@ namespace AutoStonks.SPA.Pages.Auth.Login
             if(!response.Success)
             {
                 _userCredentials = new User();
-                System.Console.WriteLine(response.Message);
                 SetSnackbar(response.Message, SnackbarColor.Danger);
             }
             else
@@ -40,12 +39,6 @@ namespace AutoStonks.SPA.Pages.Auth.Login
                 else
                     NavigationManger.NavigateTo("/");
             } 
-        }
-
-        private async Task GetUser()
-        {
-            var user = await AuthService.GetUser();
-            System.Console.WriteLine(user.Role);
         }
 
         private void SetSnackbar(string message, SnackbarColor color)

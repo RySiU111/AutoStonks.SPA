@@ -75,12 +75,15 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         {
             FirstRegistrationDate = DateTime.Now
         };
+        private Payment _payment = new Payment();
         private List<Brand> _brands = new List<Brand>();
         private int _selectedBrandId;
         
         private int _selectedModelId;
         private Snackbar _snackbar;
         private Modal _equipmentModal;
+        private Modal _paymentModal;
+        private bool _paymentConfirm = false;
         private string _errorMessage;
         private User _user;
         private int? _progressBarValue = null;
@@ -118,12 +121,17 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
                 _selectedBrandId = _advert.Generation.Model.Brand.Id;
                 _selectedModelId = _advert.Generation.Model.Id;
             }
+        }
 
-            System.Console.WriteLine(JObject.FromObject(_advert));
+        private async Task ProceedToPayment()
+        {
+            _paymentModal.Show();
         }
 
         private async Task HandleValidSubmit()
         {
+            HidePaymentModal();
+
             ServiceResponse<Advert> response;
 
             _advert.AdvertEquipments = _equipment
@@ -150,24 +158,43 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
                 _advert.UserId = _user.Id;
                 _advert.CreationDate = DateTime.Now;
+
+                _payment.Advert = _advert;
+                
+                //TODO: Redirect to payment page
                 response = await AdvertService.PostAdvert(_advert);
+                // response = new ServiceResponse<Advert>(){Success = true};
             }
                 
-
-            System.Console.WriteLine(JObject.FromObject(_advert));
-            if(!response.Success)
+            if(response == null || !response.Success)
             {
-                System.Console.WriteLine(response.Message);
-                _errorMessage = response.Message;
-                _snackbar.Interval = 15000;
-                _snackbar.Location = SnackbarLocation.Right;
-                _snackbar.Multiline = true;
-                _snackbar.Show();
+                ShowErrorMessage(response?.Message ?? "Wewnętrzny błąd serwera.");
             }
             else
             {
-                NavigationManager.NavigateTo("/");
+                // NavigationManager.NavigateTo("/");
+                var tempResponse = new ServiceResponse<Payment>() {Data = new Payment() {Id = 1, Price=123456789}};
+                _payment = tempResponse.Data;
+                _paymentConfirm = true;
+                ShowPaymentModal();
             }
+        }
+
+        private async Task ConfirmPayment()
+        {
+            System.Console.WriteLine("Zapłacono!");
+            HidePaymentModal();
+            _paymentConfirm = false;
+            NavigationManager.NavigateTo("/");
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            _errorMessage = message;
+            _snackbar.Interval = 15000;
+            _snackbar.Location = SnackbarLocation.Right;
+            _snackbar.Multiline = true;
+            _snackbar.Show();
         }
 
         private async Task<bool> CheckUser()
@@ -236,6 +263,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             catch (Exception e)
             {
                 System.Console.WriteLine(e.Message);
+                ShowErrorMessage(e.Message);
             }
         }
 
@@ -247,7 +275,9 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             StateHasChanged();
         }
 
-        private void HideModal() => _equipmentModal.Hide();
-        private void ShowModal() => _equipmentModal.Show();
+        private void HideEquipmentModal() => _equipmentModal.Hide();
+        private void HidePaymentModal() => _paymentModal.Hide();
+        private void ShowEquipmentModal() => _equipmentModal.Show();
+        private void ShowPaymentModal() => _paymentModal.Show();
     }
 }

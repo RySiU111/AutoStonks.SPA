@@ -4,7 +4,7 @@
 
 <div class="row justify-content-center">
     <div class="col-12 pb-4">
-        <EditForm class="row justify-content-center" Model="_advert" OnValidSubmit="HandleValidSubmit">
+        <EditForm class="row justify-content-center" Model="_advert" OnValidSubmit="ProceedToPayment">
             <DataAnnotationsValidator />
             <div class="col-6">
             <Field>
@@ -23,13 +23,13 @@
                 <FieldLabel>Data Pierwszej rejestracji samochodu</FieldLabel>
                 <DateEdit Placeholder="FirstRegistrationDate" 
                     TValue="DateTime"
-                    @bind-Text="_advert.FirstRegistrationDate"/>
+                    @bind-Date="_advert.FirstRegistrationDate"/>
             </Field>
             <Field>
                 <FieldLabel>Data Produkcji</FieldLabel>
                 <DateEdit Placeholder="Data Produkcji" 
                     TValue="DateTime"
-                    @bind-Text="_advert.CarProductionDate"/>
+                    @bind-Date="_advert.CarProductionDate"/>
             </Field>
             <Field>
                 <FieldLabel>Numer rejestracyjny</FieldLabel>
@@ -178,7 +178,7 @@
 
             <Button class="col-12 mt-3" 
                 Color="Color.Primary" 
-                Clicked="@ShowModal">
+                Clicked="@ShowEquipmentModal">
                 Zarządzaj Wyposażeniem
             </Button>
             </div>
@@ -207,8 +207,56 @@
             </Fields>
         </ModalBody>
         <ModalFooter>
-            <Button Color="Color.Primary" Clicked="@HideModal">Zapisz</Button>
+            <Button Color="Color.Primary" Clicked="@HideEquipmentModal">Zapisz</Button>
         </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="_paymentModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">
+        <ModalHeader>
+            <ModalTitle>Opłata</ModalTitle>
+            <CloseButton Clicked="@HidePaymentModal" />
+        </ModalHeader>
+        @if(!_paymentConfirm)
+        {
+            <EditForm Model="_payment" OnValidSubmit="HandleValidSubmit">
+                <ModalBody class="row justify-content-center">
+                    <DataAnnotationsValidator />
+                    <Field class="col-12">
+                        <FieldLabel>Okres wystawienia oferty</FieldLabel>
+                        <Select TValue="int" @bind-SelectedValue="_payment.DurationInDays">
+                                <SelectItem Value="10">10 dni</SelectItem>
+                                <SelectItem Value="20">20 dni</SelectItem>
+                                <SelectItem Value="30">30 dni</SelectItem>
+                        </Select>
+                    </Field>
+                    <Field class="col-auto">
+                        <Check
+                            TValue="bool" 
+                            @bind-Value="_advert.IsPromoted">
+                            Promowana</Check>
+                        <ValidationMessage For="@(() => _advert.IsPromoted)" />
+                    </Field>
+                </ModalBody>
+                <ModalFooter>
+                    <Button Color="Color.Primary" Type="ButtonType.Submit">Wyślij</Button>
+                </ModalFooter>
+            </EditForm>
+        }
+        else
+        {
+            <ModalBody class="row justify-content-center mx-4">
+                <Field class="col-auto">
+                    <FieldLabel>Cena za wystawienie ogłoszenia</FieldLabel>
+                    <NumericEdit Placeholder="Price" 
+                        TValue="float"
+                        @bind-Value="_payment.Price"/>
+                </Field>
+                <Button class="col-12" Color="Color.Success" @onclick="ConfirmPayment">Zapłać</Button>
+            </ModalBody>
+        }
     </ModalContent>
 </Modal>
 

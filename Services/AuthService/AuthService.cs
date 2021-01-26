@@ -37,7 +37,7 @@ namespace AutoStonks.SPA.Services.AuthService
         public async Task<ServiceResponse<User>> Login(User credentials)
         {
             if (credentials == null)
-                return null;
+                return new ServiceResponse<User>() { Success = false, Message = "Brak poświadczeń użytkownika." };;
 
             HttpResponseMessage response;
 
@@ -48,7 +48,7 @@ namespace AutoStonks.SPA.Services.AuthService
             catch (Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return null;
+                return new ServiceResponse<User>() { Success = false, Message = e.Message };
             }
 
             var content = await ResponseToContent(response);
@@ -62,7 +62,7 @@ namespace AutoStonks.SPA.Services.AuthService
         public async Task<ServiceResponse<User>> Register(User user)
         {
             if (user == null)
-                return null;
+                return new ServiceResponse<User>() { Success = false, Message = "Nie można pobrac informacji o użytkowniku." };
 
             HttpResponseMessage response;
 
@@ -73,11 +73,12 @@ namespace AutoStonks.SPA.Services.AuthService
             catch (Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return null;
+                var error = new ServiceResponse<User>() { Success = false, Message = e.Message };
+                return error;
             }
 
             if (!response.IsSuccessStatusCode)
-                return null;
+                return new ServiceResponse<User>() { Success = false, Message = "Wewnętrzny błąd serwera." };
 
             var content = await ResponseToContent(response);
 

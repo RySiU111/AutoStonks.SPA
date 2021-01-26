@@ -129,7 +129,7 @@ namespace AutoStonks.SPA.Services
         public async Task<ServiceResponse<Advert>> PostAdvert(Advert advert)
         {
             if(advert == null)
-                return null;
+                return new ServiceResponse<Advert>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
 
             HttpResponseMessage response;
 
@@ -140,16 +140,16 @@ namespace AutoStonks.SPA.Services
             catch(Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return null;
+                return new ServiceResponse<Advert>() { Success = false, Message = e.Message };;
             }
-            System.Console.WriteLine(await response.Content.ReadAsStringAsync());
+            
             return await ResponseToContent(response);
         }
 
         public async Task<ServiceResponse<Advert>> PutAdvert(Advert advert)
         {
             if(advert == null)
-                return null;
+                return new ServiceResponse<Advert>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
 
             HttpResponseMessage response;
             
@@ -160,8 +160,11 @@ namespace AutoStonks.SPA.Services
             catch(Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return null;
+                return new ServiceResponse<Advert>() { Success = false, Message = e.Message };
             }
+
+            if(!response.IsSuccessStatusCode)
+                return new ServiceResponse<Advert>() { Success = false, Message = "Wewnętrzny błąd serwera." };
 
             return await ResponseToContent(response);
         }
