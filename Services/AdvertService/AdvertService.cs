@@ -169,6 +169,33 @@ namespace AutoStonks.SPA.Services
             return await ResponseToContent<object>(response);
         }
 
+        public async Task<ServiceResponse<object>> PutPayment(Payment payment)
+        {
+            if(payment == null)
+                return new ServiceResponse<object>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
+
+            HttpResponseMessage response;
+            
+            try
+            {
+                var content = JObject.FromObject(payment);
+                content.Add("isTerminated", false);
+                var stringContent =  new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+                
+                response = await _http.PutAsync($"{_baseUrl}advert/", stringContent);
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                return new ServiceResponse<object>() { Success = false, Message = e.Message };
+            }
+
+            if(!response.IsSuccessStatusCode)
+                return new ServiceResponse<object>() { Success = false, Message = "Wewnętrzny błąd serwera." };
+
+            return await ResponseToContent<object>(response);
+        }
+
         private StringContent GetStringContent<T>(T obj) => 
             new StringContent(JObject.FromObject(obj).ToString(), Encoding.UTF8, "application/json");
 

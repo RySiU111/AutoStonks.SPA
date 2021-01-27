@@ -235,7 +235,7 @@
                     <Field class="col-auto">
                         <Check
                             TValue="bool" 
-                            @bind-Value="_advert.IsPromoted">
+                            @bind-Checked="_advert.IsPromoted">
                             Promowana</Check>
                         <ValidationMessage For="@(() => _advert.IsPromoted)" />
                     </Field>

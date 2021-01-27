@@ -75,7 +75,10 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         {
             FirstRegistrationDate = DateTime.Now
         };
-        private Payment _payment = new Payment();
+        private Payment _payment = new Payment()
+        {
+            DurationInDays = 10
+        };
         private List<Brand> _brands = new List<Brand>();
         private int _selectedBrandId;
         
@@ -164,7 +167,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
                 _advert.CreationDate = DateTime.Now;
 
                 _payment.Advert = _advert;
-                
+                System.Console.WriteLine(JObject.FromObject(_payment));
                 response = await AdvertService.PostAdvert(_payment);
             }
                 
@@ -188,11 +191,19 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private async Task ConfirmPayment()
         {
-            
-            System.Console.WriteLine("Zapłacono!");
-            HidePaymentModal();
-            _paymentConfirm = false;
-            NavigationManager.NavigateTo("/");
+            var response = await AdvertService.PutPayment(_payment);
+
+            if(response == null || !response.Success)
+            {
+                ShowErrorMessage(response?.Message ?? "Wewnętrzny błąd serwera.");
+            }
+            else
+            {
+                System.Console.WriteLine("Zapłacono!");
+                HidePaymentModal();
+                _paymentConfirm = false;
+                NavigationManager.NavigateTo("/");
+            }
         }
 
         private void ShowErrorMessage(string message)
