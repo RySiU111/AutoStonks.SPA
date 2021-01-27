@@ -182,7 +182,7 @@ namespace AutoStonks.SPA.Services
                 content.Add("isTerminated", false);
                 var stringContent =  new StringContent(content.ToString(), Encoding.UTF8, "application/json");
                 
-                response = await _http.PutAsync($"{_baseUrl}advert/", stringContent);
+                response = await _http.PutAsync($"{_baseUrl}payment/", stringContent);
             }
             catch(Exception e)
             {
