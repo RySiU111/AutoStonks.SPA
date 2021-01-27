@@ -8,8 +8,8 @@ namespace AutoStonks.SPA.Services
     {
         Task<List<Advert>> GetAdverts();
         Task<List<Equipment>> GetEquipment();
-        Task<ServiceResponse<Advert>> PostAdvert(Advert advert);
-        Task<ServiceResponse<Advert>> PutAdvert(Advert advert);
+        Task<ServiceResponse<Payment>> PostAdvert(Payment advert);
+        Task<ServiceResponse<object>> PutAdvert(Advert advert);
         Task<Advert> GetAdvert(int id);
         Task<List<Advert>> FilterAdvert(FilterQuery filterQuery);
     }

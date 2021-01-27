@@ -77,8 +77,10 @@ namespace AutoStonks.SPA.Services.AuthService
                 return error;
             }
 
-            if (!response.IsSuccessStatusCode)
-                return new ServiceResponse<User>() { Success = false, Message = "Wewnętrzny błąd serwera." };
+            var serviceResponse = await ResponseToContent(response);
+
+            if (!serviceResponse.Success)
+                return new ServiceResponse<User>() { Success = false, Message = serviceResponse.Message };
 
             var content = await ResponseToContent(response);
 

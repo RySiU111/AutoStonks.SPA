@@ -126,30 +126,30 @@ namespace AutoStonks.SPA.Services
             return response.Data;
         }
 
-        public async Task<ServiceResponse<Advert>> PostAdvert(Advert advert)
+        public async Task<ServiceResponse<Payment>> PostAdvert(Payment payment)
         {
-            if(advert == null)
-                return new ServiceResponse<Advert>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
+            if(payment == null)
+                return new ServiceResponse<Payment>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
 
             HttpResponseMessage response;
 
             try
             {
-                response = await _http.PostAsync($"{_baseUrl}advert/", GetStringContent(advert));
+                response = await _http.PostAsync($"{_baseUrl}advert/", GetStringContent(payment));
             }
             catch(Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return new ServiceResponse<Advert>() { Success = false, Message = e.Message };;
+                return new ServiceResponse<Payment>() { Success = false, Message = e.Message };;
             }
             
-            return await ResponseToContent(response);
+            return await ResponseToContent<Payment>(response);
         }
 
-        public async Task<ServiceResponse<Advert>> PutAdvert(Advert advert)
+        public async Task<ServiceResponse<object>> PutAdvert(Advert advert)
         {
             if(advert == null)
-                return new ServiceResponse<Advert>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
+                return new ServiceResponse<object>() { Success = false, Message = "Brak informacji o ogłoszeniu." };
 
             HttpResponseMessage response;
             
@@ -160,19 +160,22 @@ namespace AutoStonks.SPA.Services
             catch(Exception e)
             {
                 System.Console.WriteLine(e.Message);
-                return new ServiceResponse<Advert>() { Success = false, Message = e.Message };
+                return new ServiceResponse<object>() { Success = false, Message = e.Message };
             }
 
             if(!response.IsSuccessStatusCode)
-                return new ServiceResponse<Advert>() { Success = false, Message = "Wewnętrzny błąd serwera." };
+                return new ServiceResponse<object>() { Success = false, Message = "Wewnętrzny błąd serwera." };
 
-            return await ResponseToContent(response);
+            return await ResponseToContent<object>(response);
         }
 
-        private StringContent GetStringContent(Advert advert) => 
-            new StringContent(JObject.FromObject(advert).ToString(), Encoding.UTF8, "application/json");
+        private StringContent GetStringContent<T>(T obj) => 
+            new StringContent(JObject.FromObject(obj).ToString(), Encoding.UTF8, "application/json");
 
-        private async Task<ServiceResponse<Advert>> ResponseToContent(HttpResponseMessage response) =>
-            JObject.Parse(await response.Content.ReadAsStringAsync()).ToObject<ServiceResponse<Advert>>();
+        private async Task<ServiceResponse<T>> ResponseToContent<T>(HttpResponseMessage response) =>
+            JObject.Parse(await response.Content.ReadAsStringAsync()).ToObject<ServiceResponse<T>>();
+
+        // private async Task<ServiceResponse<object>> ResponseToContentString(HttpResponseMessage response) =>
+        //     JObject.Parse(await response.Content.ReadAsStringAsync()).ToObject<ServiceResponse<object>>();
     }
 }

@@ -43,6 +43,7 @@ namespace AutoStonks.SPA.Pages.Auth.Login
 
         private void SetSnackbar(string message, SnackbarColor color)
         {
+            System.Console.WriteLine(message);
             _message = message;
             _snackbar.Interval = 15000;
             _snackbar.Location = SnackbarLocation.Right;

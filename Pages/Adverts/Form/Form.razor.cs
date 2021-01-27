@@ -125,14 +125,17 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private async Task ProceedToPayment()
         {
-            _paymentModal.Show();
+            if(Id > 0)
+                await HandleValidSubmit();
+            else
+                _paymentModal.Show();
         }
 
         private async Task HandleValidSubmit()
         {
             HidePaymentModal();
 
-            ServiceResponse<Advert> response;
+            ServiceResponse<Payment> response;
 
             _advert.AdvertEquipments = _equipment
                 .Where(e => e.Active)
@@ -147,7 +150,8 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             if(Id > 0)
             {
                 _advert.ModificationDate = DateTime.Now;
-                response = await AdvertService.PutAdvert(_advert);
+                var tempResponse = await AdvertService.PutAdvert(_advert);
+                response = new ServiceResponse<Payment>() {Success = tempResponse.Success, Message = tempResponse.Message};
             }
             else
             {
@@ -161,9 +165,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
                 _payment.Advert = _advert;
                 
-                //TODO: Redirect to payment page
-                response = await AdvertService.PostAdvert(_advert);
-                // response = new ServiceResponse<Advert>(){Success = true};
+                response = await AdvertService.PostAdvert(_payment);
             }
                 
             if(response == null || !response.Success)
@@ -172,9 +174,13 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
             }
             else
             {
-                // NavigationManager.NavigateTo("/");
-                var tempResponse = new ServiceResponse<Payment>() {Data = new Payment() {Id = 1, Price=123456789}};
-                _payment = tempResponse.Data;
+                if(Id > 0)
+                {
+                    NavigationManager.NavigateTo("/");
+                    return;
+                }
+                    
+                _payment = response.Data;
                 _paymentConfirm = true;
                 ShowPaymentModal();
             }
@@ -182,6 +188,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private async Task ConfirmPayment()
         {
+            
             System.Console.WriteLine("Zapłacono!");
             HidePaymentModal();
             _paymentConfirm = false;
@@ -190,6 +197,7 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private void ShowErrorMessage(string message)
         {
+            System.Console.WriteLine(message);
             _errorMessage = message;
             _snackbar.Interval = 15000;
             _snackbar.Location = SnackbarLocation.Right;
