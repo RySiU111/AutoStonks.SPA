@@ -179,7 +179,7 @@ namespace AutoStonks.SPA.Services
             try
             {
                 var content = JObject.FromObject(payment);
-                content.Add("isTerminated", false);
+                content.Add("isTerminated", true);
                 var stringContent =  new StringContent(content.ToString(), Encoding.UTF8, "application/json");
                 
                 response = await _http.PutAsync($"{_baseUrl}payment/", stringContent);
