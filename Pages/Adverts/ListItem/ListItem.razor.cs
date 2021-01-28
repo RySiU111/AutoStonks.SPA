@@ -7,5 +7,8 @@ namespace AutoStonks.SPA.Pages.Adverts.ListItem
     {
         [Parameter]
         public Advert Item { get; set; }
+
+        [Parameter]
+        public User User { get; set; }
     }
 }

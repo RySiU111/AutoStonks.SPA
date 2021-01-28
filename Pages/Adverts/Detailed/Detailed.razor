@@ -108,6 +108,16 @@
                 }
             }
         </div>
+        @if(_user.Role == 'A')
+        {
+            <div class="col-12">
+                <Button 
+                    Type="ButtonType.Button" 
+                    Color="Color.Warning"
+                    @onclick="DeleteItem">
+                    Usuń ofertę</Button>
+            </div>
+        }
     </div>
 </div>
 

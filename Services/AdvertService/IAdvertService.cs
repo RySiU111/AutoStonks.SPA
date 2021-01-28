@@ -13,5 +13,6 @@ namespace AutoStonks.SPA.Services
         Task<Advert> GetAdvert(int id);
         Task<List<Advert>> FilterAdvert(FilterQuery filterQuery);
         Task<ServiceResponse<object>> PutPayment(Payment payment);
+        Task<ServiceResponse<object>> DeleteAdvert(int id);
     }
 }

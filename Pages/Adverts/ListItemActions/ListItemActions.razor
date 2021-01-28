@@ -11,12 +11,15 @@
                 @onclick="NavigateToDetailed">
                 Przejdź do oferty</Button>
         </div>
-        <div class="col-12 p-1">
-            <Button 
-                Type="ButtonType.Button" 
-                Color="Color.Success"
-                @onclick="NavigateToEdit">
-                Edytuj ofertę</Button>
-        </div>
+        @if(User.Id == Item.UserId)
+        {
+            <div class="col-12 p-1">
+                <Button 
+                    Type="ButtonType.Button" 
+                    Color="Color.Success"
+                    @onclick="NavigateToEdit">
+                    Edytuj ofertę</Button>
+            </div>
+        }
     </div>
 </div>

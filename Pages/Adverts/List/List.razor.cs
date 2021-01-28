@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using AutoStonks.SPA.Models;
 using AutoStonks.SPA.Services;
+using AutoStonks.SPA.Services.AuthService;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json.Linq;
@@ -20,19 +21,22 @@ namespace AutoStonks.SPA.Pages.Adverts.List
     {
         [Inject]
         public IAdvertService AdvertService { get; set; }
+        [Inject]
+        public IAuthService AuthService { get; set; }
         private List<Advert> _adverts;
         private Modal _modal;
         private FilterQuery _filterQuery = new FilterQuery();
+        private User _user;
 
         protected override async Task OnInitializedAsync()
         {
             _adverts = await GetAdverts();
+            _user = await AuthService.GetUser();
         }
 
         private async Task<List<Advert>> GetAdverts()
         {
             var result = await AdvertService.GetAdverts();
-
             // if(result != null)
             //     result.ForEach(r => 
             //         r.Photos = new List<Photo>()

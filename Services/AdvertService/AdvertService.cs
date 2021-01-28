@@ -24,6 +24,28 @@ namespace AutoStonks.SPA.Services
             _baseUrl = config["ServiceUrl"];
         }
 
+        public async Task<ServiceResponse<object>> DeleteAdvert(int id)
+        {
+            if(id <= 0)
+                return new ServiceResponse<object>() { Success = false, Message = "Niepoprawne dane." };
+
+            HttpResponseMessage response;
+
+            try
+            {
+                response = await _http.DeleteAsync($"{_baseUrl}advert/{id}");
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                return new ServiceResponse<object>() { Success = false, Message = e.Message };
+            }
+
+            return new ServiceResponse<object>() { 
+                Success = response.IsSuccessStatusCode, 
+                Message = response.IsSuccessStatusCode ? $"Usunięto: {id}" : await response.Content.ReadAsStringAsync()};
+        }
+
         public async Task<List<Advert>> FilterAdvert(FilterQuery filterQuery)
         {
             var builder = new UriBuilder($"{_baseUrl}advert/query");
