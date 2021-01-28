@@ -128,6 +128,26 @@ namespace AutoStonks.SPA.Services
             return response.Data;
         }
 
+        public async Task<List<Advert>> GetPromotedAdverts()
+        {
+            ServiceResponse<List<Advert>> response;
+
+            try
+            {
+                response = await _http.GetFromJsonAsync<ServiceResponse<List<Advert>>>($"{_baseUrl}advert/GetActivePremium");
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+
+            if(!response.Success)
+                return null;
+
+            return response.Data;
+        }
+
         public async Task<List<Equipment>> GetEquipment()
         {
             ServiceResponse<List<Equipment>> response;

@@ -23,6 +23,8 @@ namespace AutoStonks.SPA.Pages.Adverts.List
         public IAdvertService AdvertService { get; set; }
         [Inject]
         public IAuthService AuthService { get; set; }
+        [Parameter]
+        public List<Advert> Adverts { get; set; } = new List<Advert>();
         private List<Advert> _adverts;
         private Modal _modal;
         private FilterQuery _filterQuery = new FilterQuery();
@@ -30,7 +32,11 @@ namespace AutoStonks.SPA.Pages.Adverts.List
 
         protected override async Task OnInitializedAsync()
         {
-            _adverts = await GetAdverts();
+            if(Adverts.Count == 0)
+                _adverts = await GetAdverts();
+            else 
+                _adverts = Adverts;
+
             _user = await AuthService.GetUser();
         }
 
@@ -71,7 +77,11 @@ namespace AutoStonks.SPA.Pages.Adverts.List
         private async Task ClearFilters()
         {
             _filterQuery = new FilterQuery();
-            _adverts = await GetAdverts();
+            
+            if(Adverts.Count == 0)
+                _adverts = await GetAdverts();
+            else 
+                _adverts = Adverts;
         }
 
         private void SortList(Sort sort)
