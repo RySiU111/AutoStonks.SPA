@@ -98,19 +98,19 @@
 
 
 
-        <div class="col-12">
+        <div class="col-12 row justify-content-left">
             @if(_advert.AdvertEquipments != null)
             {
-                <Heading class="mt-2" Size="HeadingSize.Is6" Alignment="TextAlignment.Center">Wyposażenie</Heading>
+                <Heading class="col-12 mt-2" Size="HeadingSize.Is6" Alignment="TextAlignment.Center">Wyposażenie</Heading>
                 @foreach (var eq in _advert.AdvertEquipments)
                 {
-                    <Badge class="m-1" Color="Color.Info">@eq.Equipment?.Name</Badge>
+                    <Badge class="col-auto m-1" Color="Color.Info">@eq.Equipment?.Name</Badge>
                 }
             }
         </div>
         @if(_user.Role == 'A')
         {
-            <div class="col-12">
+            <div class="col-auto my-2">
                 <Button 
                     Type="ButtonType.Button" 
                     Color="Color.Warning"

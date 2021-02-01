@@ -8,8 +8,8 @@
             <DataAnnotationsValidator />
             <div class="col-6">
             <Field>
-                <FieldLabel>Tytuł</FieldLabel>
-                <TextEdit Placeholder="Tytuł" 
+                <FieldLabel>Nazwa ogłoszenia</FieldLabel>
+                <TextEdit Placeholder="Nazwa ogłoszenia" 
                     @bind-Text="_advert.Title"/>
                 <ValidationMessage For="@(() => _advert.Title)" />
             </Field>
@@ -79,37 +79,33 @@
             <Field>
                 <FieldLabel>Rodzaj paliwa</FieldLabel>
                 <Select TValue="FuelType" @bind-SelectedValue="_advert.Fuel">
-                    @foreach(var fuel in Enum.GetValues(typeof(FuelType)).Cast<FuelType>())
-                    {
-                        <SelectItem Value="@fuel">@fuel</SelectItem>
-                    } 
+                    <SelectItem Value="@FuelType.Diesel">Diesel</SelectItem>
+                    <SelectItem  Value="@FuelType.Petrol">Benzyna</SelectItem>
+                    <SelectItem Value="@FuelType.Electric">Elektryczny</SelectItem>
+                    <SelectItem Value="@FuelType.LPG">LPG</SelectItem>
                 </Select>
             </Field>
             <Field>
                 <FieldLabel>Kondycja</FieldLabel>
                 <Select TValue="ConditionState" @bind-SelectedValue="_advert.Condition">
-                    @foreach(var condition in Enum.GetValues(typeof(ConditionState)).Cast<ConditionState>())
-                    {
-                        <SelectItem Value="@condition">@condition</SelectItem>
-                    } 
+                    <SelectItem Value="@ConditionState.Undamaged">Nieuszkodzony</SelectItem>
+                    <SelectItem Value="@ConditionState.Damaged">Uszkodzony</SelectItem>
                 </Select>
             </Field>
             <Field>
                 <FieldLabel>Napęd</FieldLabel>
                 <Select TValue="DriveTypes" @bind-SelectedValue="_advert.DriveType">
-                    @foreach(var driveType in Enum.GetValues(typeof(DriveTypes)).Cast<DriveTypes>())
-                    {
-                        <SelectItem Value="@driveType">@driveType</SelectItem>
-                    } 
+                    <SelectItem Value="@DriveTypes.FWD">FWD</SelectItem>
+                    <SelectItem Value="@DriveTypes.RWD">RWD</SelectItem>
+                    <SelectItem Value="@DriveTypes.AWD">AWD</SelectItem>
                 </Select>
             </Field>
             <Field>
                 <FieldLabel>Skrzynia biegów</FieldLabel>
                 <Select TValue="TransmissionTypes" @bind-SelectedValue="_advert.TransmissionType">
-                    @foreach(var transmissionType in Enum.GetValues(typeof(TransmissionTypes)).Cast<TransmissionTypes>())
-                    {
-                        <SelectItem Value="@transmissionType">@transmissionType</SelectItem>
-                    } 
+                    <SelectItem Value="@TransmissionTypes.Manual">Manualna</SelectItem>
+                    <SelectItem Value="@TransmissionTypes.Automatic">Automatyczna</SelectItem>
+                    <SelectItem Value="@TransmissionTypes.Sequence">Sekwencyjna</SelectItem>
                 </Select>
             </Field>
             <Field>
@@ -174,13 +170,14 @@
                 <Blazorise.ProgressBar Animated="true" Striped="true"  Min="0" Max="100" Value="_progressBarValue" />
             }
 
-            
-
-            <Button class="col-12 mt-3" 
-                Color="Color.Primary" 
-                Clicked="@ShowEquipmentModal">
-                Zarządzaj Wyposażeniem
-            </Button>
+            <Field>
+                <FieldLabel></FieldLabel>
+                <Button class="col-12 mt-3" 
+                    Color="Color.Primary" 
+                    Clicked="@ShowEquipmentModal">
+                    Zarządzaj Wyposażeniem
+                </Button>
+            </Field>
             </div>
             <Button Type="ButtonType.Submit" Color="Color.Success" Disabled="@(_progressBarValue != null)">Zapisz</Button>
         </EditForm>

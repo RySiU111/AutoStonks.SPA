@@ -73,7 +73,8 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
 
         private Advert _advert = new Advert()
         {
-            FirstRegistrationDate = DateTime.Now
+            FirstRegistrationDate = DateTime.Now,
+            CarProductionDate = DateTime.Now 
         };
         private Payment _payment = new Payment()
         {
