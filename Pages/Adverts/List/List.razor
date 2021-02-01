@@ -12,10 +12,11 @@
                             <Field>
                                 <FieldLabel>Sortowanie</FieldLabel>
                                 <Select TValue="Sort" SelectedValueChanged="SortList">
-                                    @foreach(var sort in Enum.GetValues(typeof(Sort)).Cast<Sort>())
-                                    {
-                                        <SelectItem Value="@sort">@sort</SelectItem>
-                                    } 
+                                    <SelectItem Value="@Sort.Data1">Data dodania - Rosnąco</SelectItem>
+                                    <SelectItem Value="@Sort.Data2">Data dodania - Malejąco</SelectItem>
+                                    <SelectItem Value="@Sort.Price1">Cena - Rosnąco</SelectItem>
+                                    <SelectItem Value="@Sort.Price2">Cena - Malejąco</SelectItem>
+                                    <SelectItem Value="@Sort.Popular">Popularne</SelectItem>
                                 </Select>
                             </Field>
                         </div>
