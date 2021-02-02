@@ -74,8 +74,22 @@
                     Bezwypadkowy</Check>
                 <ValidationMessage For="@(() => _advert.HasBeenCrashed)" />
             </Field>
+            <Field>
+                <FieldLabel>Przebieg [km]</FieldLabel>
+                <NumericEdit Placeholder="Przebieg [km]" 
+                    TValue="int"
+                    @bind-Value="_advert.Mileage"
+                    Min="0"/>
+                <ValidationMessage For="@(() => _advert.Mileage)" />
+            </Field>
             </div>
             <div class="col-6">
+            <Field>
+                <FieldLabel>Numer telefonu</FieldLabel>
+                <TextEdit Placeholder="Numer telefonu" 
+                    @bind-Text="_advert.PhoneNumber"/>
+                <ValidationMessage For="@(() => _advert.PhoneNumber)" />
+            </Field>
             <Field>
                 <FieldLabel>Rodzaj paliwa</FieldLabel>
                 <Select TValue="FuelType" @bind-SelectedValue="_advert.Fuel">
@@ -110,7 +124,7 @@
             </Field>
             <Field>
                 <FieldLabel>Opis</FieldLabel>
-                <MemoEdit Rows="5"  Placeholder="Opis"
+                <MemoEdit Rows="7"  Placeholder="Opis"
                     @bind-Text="_advert.Description"/>
                 <ValidationMessage For="@(() => _advert.Description)" />
             </Field>
@@ -170,14 +184,12 @@
                 <Blazorise.ProgressBar Animated="true" Striped="true"  Min="0" Max="100" Value="_progressBarValue" />
             }
 
-            <Field>
-                <FieldLabel></FieldLabel>
-                <Button class="col-12 mt-3" 
-                    Color="Color.Primary" 
-                    Clicked="@ShowEquipmentModal">
-                    Zarządzaj Wyposażeniem
-                </Button>
-            </Field>
+            <Button class="col-12 my-3" 
+                Color="Color.Primary" 
+                Clicked="@ShowEquipmentModal">
+                Zarządzaj Wyposażeniem
+            </Button>
+  
             </div>
             <Button Type="ButtonType.Submit" Color="Color.Success" Disabled="@(_progressBarValue != null)">Zapisz</Button>
         </EditForm>
