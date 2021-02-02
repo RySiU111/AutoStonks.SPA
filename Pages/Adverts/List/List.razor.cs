@@ -100,12 +100,12 @@ namespace AutoStonks.SPA.Pages.Adverts.List
                 }
                 case Sort.Data1: 
                 {
-                    _adverts = _adverts.OrderBy(a => a.CreationDate).ToList();
+                    _adverts = _adverts.OrderBy(a => a.CarProductionDate).ToList();
                     break;
                 }
                 case Sort.Data2: 
                 {
-                    _adverts = _adverts.OrderByDescending(a => a.CreationDate).ToList();
+                    _adverts = _adverts.OrderByDescending(a => a.CarProductionDate).ToList();
                     break;
                 }
                 case Sort.Popular: 
