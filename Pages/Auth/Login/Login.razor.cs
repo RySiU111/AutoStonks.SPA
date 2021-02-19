@@ -45,7 +45,6 @@ namespace AutoStonks.SPA.Pages.Auth.Login
         {
             System.Console.WriteLine(message);
             _message = message;
-            _snackbar.Interval = 15000;
             _snackbar.Location = SnackbarLocation.Right;
             _snackbar.Multiline = true;
             _snackbar.Color = color;

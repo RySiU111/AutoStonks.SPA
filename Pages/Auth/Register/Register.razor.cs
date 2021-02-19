@@ -59,7 +59,6 @@ namespace AutoStonks.SPA.Pages.Auth.Register
         {
             System.Console.WriteLine(message);
             _errorMessage = message;
-            _snackbar.Interval = 30000;
             _snackbar.Location = SnackbarLocation.Right;
             _snackbar.Multiline = true;
             _snackbar.Show();

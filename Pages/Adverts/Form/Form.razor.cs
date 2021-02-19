@@ -211,7 +211,6 @@ namespace AutoStonks.SPA.Pages.Adverts.Form
         {
             System.Console.WriteLine(message);
             _errorMessage = message;
-            _snackbar.Interval = 15000;
             _snackbar.Location = SnackbarLocation.Right;
             _snackbar.Multiline = true;
             _snackbar.Show();

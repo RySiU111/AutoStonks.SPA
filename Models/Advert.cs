@@ -46,20 +46,27 @@ namespace AutoStonks.SPA.Models
         public DateTime ModificationDate { get; set; }
         public DateTime ExpiryDate { get; set; } //ustawiamy dopiero, gdy otrzymamy płatność
         public bool IsPromoted { get; set; }
+        [Required(ErrorMessage = "Nazwa ogłoszenia jest wymagana")]
         public string Title { get; set; }
         public string Description { get; set; }
-        // [Required(ErrorMessage = "Pole Vin jest wymagane")]
+        [Required(ErrorMessage = "Pole VIN jest wymagane")]
         public string VIN { get; set; }
         public DateTime FirstRegistrationDate { get; set; }
+        [Required(ErrorMessage = "Numer rejestracyjny jest wymagany")]
         public string PlateNumber { get; set; }
         public States State { get; set; }
+        [Required(ErrorMessage = "Cena jest wymagana")]
+        [Range(1, double.MaxValue, ErrorMessage = "Cena musi być większa od 0")]
         public double Price { get; set; }
+        [Required(ErrorMessage = "Przebieg jest wymagany")]
+        [Range(1, int.MaxValue, ErrorMessage = "Przebieg musi być większy od 0")]
         public int Mileage { get; set; }
         public DateTime CarProductionDate { get; set; }
         public FuelType Fuel { get; set; }
         public ConditionState Condition { get; set; }
         public int Horsepower { get; set; }
         public int Displacement { get; set; }
+        [Required(ErrorMessage = "Lokalizacja jest wymagana")]
         public string Location { get; set; }
         public bool HasBeenCrashed { get; set; }
         public TransmissionTypes TransmissionType { get; set; }

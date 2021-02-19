@@ -226,7 +226,7 @@
     <ModalContent IsCentered="true" Size="ModalSize.ExtraLarge">
         <ModalHeader>
             <ModalTitle>Opłata</ModalTitle>
-            <CloseButton Clicked="@HidePaymentModal" />
+            @* <CloseButton Clicked="@HidePaymentModal" /> *@
         </ModalHeader>
         @if(!_paymentConfirm)
         {
@@ -259,10 +259,20 @@
             <ModalBody class="row justify-content-center mx-4">
                 <Field class="col-auto">
                     <FieldLabel>Cena za wystawienie ogłoszenia</FieldLabel>
-                    <NumericEdit Placeholder="Cena za wystawienie ogłoszenie" 
-                        Disabled="true"
-                        TValue="float"
-                        @bind-Value="_payment.Price"/>
+                    <Addons class="my-1">
+                        <Addon AddonType="AddonType.Start">
+                            <AddonLabel class="detailed-addon-start">Cena</AddonLabel>
+                        </Addon>
+                        <Addon AddonType="AddonType.Body">
+                            <TextEdit Placeholder="Cena za wystawienie ogłoszenie" 
+                                Disabled="true"
+                                TValue="float"
+                                Text="@_payment.Price.ToString("N2")"/>
+                        </Addon>
+                        <Addon AddonType="AddonType.End">
+                            <AddonLabel>zł</AddonLabel>
+                        </Addon>
+                    </Addons>
                 </Field>
                 <Button class="col-12" Color="Color.Success" @onclick="ConfirmPayment">Zapłać</Button>
             </ModalBody>
@@ -271,7 +281,7 @@
 </Modal>
 
 <!--Error snackbar-->
-<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+<Snackbar @ref="_snackbar" Interval="15000" Color="SnackbarColor.Danger">
   <SnackbarBody>
       @_errorMessage
   </SnackbarBody>
